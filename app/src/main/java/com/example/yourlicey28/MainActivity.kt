@@ -13,6 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenFirst
+import com.example.yourlicey28.presentation.welcome.WelcomeScreenSecond
+import com.example.yourlicey28.presentation.welcome.WelcomeScreenThird
 import com.example.yourlicey28.ui.theme.YourLicey28Theme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +25,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            WelcomeScreenFirst()
+            WelcomeScreenThird()
         }
     }
 }
