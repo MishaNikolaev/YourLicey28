@@ -43,7 +43,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.9.0"
     }
     packaging {
         resources {
@@ -87,16 +87,13 @@ dependencies {
     //Material
     implementation("androidx.compose.material:material-icons-extended:1.0.0")
 
-    //Video player
-    implementation ("androidx.media3:media3-exoplayer:1.2.1")
-    implementation ("androidx.media3:media3-ui:1.2.1")
-    implementation ("androidx.media3:media3-common:1.2.1")
-
-    implementation( "com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.28")
-
     //Dagger Hilt
     implementation(libs.hilt.android.v245)
     kapt(libs.hilt.android.compiler.v245)
     kapt(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    //AppDataStore
+    implementation(libs.androidx.datastore.preferences)
+
 }

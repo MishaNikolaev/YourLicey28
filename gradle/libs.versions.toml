@@ -1,5 +1,6 @@
 [versions]
 agp = "8.5.0"
+datastorePreferences = "1.1.1"
 hiltAndroid = "2.49"
 hiltAndroidCompiler = "2.48.1"
 hiltAndroidCompilerVersion = "2.45"
@@ -15,12 +16,13 @@ activityCompose = "1.9.0"
 composeBom = "2024.04.01"
 lifecycleViewmodelKtx = "2.8.3"
 
-hiltVersion = "2.45"
+hiltVersion = "2.48.1"
 
 
 [libraries]
 
 
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltCompiler" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltCompiler" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
