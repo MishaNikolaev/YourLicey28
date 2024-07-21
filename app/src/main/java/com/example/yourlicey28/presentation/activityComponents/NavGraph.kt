@@ -31,6 +31,9 @@ import com.example.yourlicey28.presentation.welcome.WelcomeScreenFirst
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenSecond
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenThird
 import com.example.yourlicey28.presentation.welcome.WelcomeViewModel
+import com.example.yourlicey28.ui.theme.BlueLC
+import com.example.yourlicey28.ui.theme.GrayLC
+import com.example.yourlicey28.ui.theme.LightBlueLC
 
 sealed class WelcomeRoutes(val route: String) {
     object WelcomeScreenFirst : WelcomeRoutes("welcome_screen_first")
@@ -114,7 +117,12 @@ fun BottomNavigationBar(navController: NavHostController) {
                         modifier = Modifier.size(28.dp)
                     )
                 },
-                label = { Text(text = item.title) },
+                label = {
+                    Text(
+                        text = item.title,
+                        color = if (isActive) LightBlueLC else GrayLC
+                    )
+                },
                 selected = false,
                 onClick = {
                     if (currentRoute != item.route) {
