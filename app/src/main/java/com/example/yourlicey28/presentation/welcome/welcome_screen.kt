@@ -294,6 +294,7 @@ fun WelcomeScreenThird(
                     .size(45.dp)
                     .background(BlueLC)
                     .clickable {
+                        viewModel.beginClicked()
                         navController.navigate(WelcomeRoutes.NewsScreen.route)
                     }
             ) {

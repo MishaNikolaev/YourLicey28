@@ -72,20 +72,21 @@ fun NavGraphWelcome(
         }
     }
 }
-
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
     val viewModel: WelcomeViewModel = hiltViewModel()
 
     if (viewModel.state.finished) {
-        Scaffold(
-            bottomBar = { BottomNavigationBar(navController) }
-        ) { innerPadding ->
-            NavigationGraph(navController = navController, modifier = Modifier.padding(innerPadding))
+        if (viewModel.state.isInitial != -1) {
+            Scaffold(
+                bottomBar = { BottomNavigationBar(navController) }
+            ) { innerPadding ->
+                NavigationGraph(navController = navController, modifier = Modifier.padding(innerPadding))
+            }
+        } else {
+            NavGraphWelcome(navController = navController, viewModel = viewModel)
         }
-    } else {
-        NavGraphWelcome(navController = navController)
     }
 }
 
