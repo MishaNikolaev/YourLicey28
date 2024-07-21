@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.yourlicey28.presentation.activityComponents.MainScreen
 import com.example.yourlicey28.presentation.activityComponents.NavGraphWelcome
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenFirst
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenSecond
@@ -29,7 +30,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
-            NavGraphWelcome(navController = navController)
+
+            //NavGraphWelcome(navController = navController)
+
+            MainScreen()
         }
     }
 }
