@@ -37,14 +37,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.yourlicey28.R
+import com.example.yourlicey28.presentation.activityComponents.WelcomeRoutes
 import com.example.yourlicey28.ui.theme.BlueLC
 import com.example.yourlicey28.ui.theme.DarkBlueLC
 import com.example.yourlicey28.ui.theme.monterrat
 import com.example.yourlicey28.ui.theme.roboto
 
 @Composable
-fun WelcomeScreenFirst() {
+fun WelcomeScreenFirst(navController: NavController) {
     Column(
         modifier = Modifier
             .background(DarkBlueLC)
@@ -87,7 +90,7 @@ fun WelcomeScreenFirst() {
             ClickableText(
                 text = AnnotatedString("Пропустить"),
                 onClick = {
-
+                    navController.navigate(WelcomeRoutes.NewsScreen.route)
                 },
                 style = LocalTextStyle.current.copy(
                     fontFamily = roboto,
@@ -98,10 +101,12 @@ fun WelcomeScreenFirst() {
             Spacer(modifier = Modifier.width(180.dp))
 
             Box(
-                modifier = Modifier.clip(RoundedCornerShape(20.dp))
+                modifier = Modifier
+                    .clip(RoundedCornerShape(20.dp))
                     .size(45.dp)
-                    .background(BlueLC).clickable {
-
+                    .background(BlueLC)
+                    .clickable {
+                        navController.navigate(WelcomeRoutes.WelcomeScreenSecond.route)
                     }
             ) {
                 Icon(
@@ -141,7 +146,7 @@ fun WelcomeScreenFirst() {
 
 
 @Composable
-fun WelcomeScreenSecond() {
+fun WelcomeScreenSecond(navController: NavController) {
     Column(
         modifier = Modifier
             .background(DarkBlueLC)
@@ -183,7 +188,7 @@ fun WelcomeScreenSecond() {
             ClickableText(
                 text = AnnotatedString("Пропустить"),
                 onClick = {
-
+                    navController.navigate(WelcomeRoutes.NewsScreen.route)
                 },
                 style = LocalTextStyle.current.copy(
                     fontFamily = roboto,
@@ -194,10 +199,12 @@ fun WelcomeScreenSecond() {
             Spacer(modifier = Modifier.width(180.dp))
 
             Box(
-                modifier = Modifier.clip(RoundedCornerShape(20.dp))
+                modifier = Modifier
+                    .clip(RoundedCornerShape(20.dp))
                     .size(45.dp)
-                    .background(BlueLC).clickable {
-
+                    .background(BlueLC)
+                    .clickable {
+                        navController.navigate(WelcomeRoutes.WelcomeScreenThird.route)
                     }
             ) {
                 Icon(
@@ -236,7 +243,10 @@ fun WelcomeScreenSecond() {
 
 
 @Composable
-fun WelcomeScreenThird() {
+fun WelcomeScreenThird(
+    navController: NavController,
+    viewModel: WelcomeViewModel = hiltViewModel()
+) {
     Column(
         modifier = Modifier
             .background(DarkBlueLC)
@@ -258,7 +268,9 @@ fun WelcomeScreenThird() {
             fontFamily = monterrat,
             fontWeight = FontWeight.Bold,
             color = Color.White,
-            modifier = Modifier.align(Alignment.CenterHorizontally).padding(start=20.dp)
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(start = 20.dp)
         )
         Spacer(modifier = Modifier.height(20.dp))
         Text(
@@ -276,10 +288,13 @@ fun WelcomeScreenThird() {
         Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Spacer(modifier = Modifier.width(240.dp))
             Box(
-                modifier = Modifier.clip(RoundedCornerShape(20.dp))
+                modifier = Modifier
+                    .clip(RoundedCornerShape(20.dp))
                     .size(45.dp)
-                    .background(BlueLC).clickable {
-
+                    .background(BlueLC)
+                    .clickable {
+                        viewModel.beginClicked()
+                        navController.navigate(WelcomeRoutes.NewsScreen.route)
                     }
             ) {
                 Icon(
