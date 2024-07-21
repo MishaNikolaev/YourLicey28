@@ -15,6 +15,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,6 +26,7 @@ import com.example.yourlicey28.presentation.news.NewsScreen
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenFirst
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenSecond
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenThird
+import com.example.yourlicey28.presentation.welcome.WelcomeViewModel
 
 sealed class WelcomeRoutes(val route: String) {
     object WelcomeScreenFirst : WelcomeRoutes("welcome_screen_first")
@@ -33,29 +36,35 @@ sealed class WelcomeRoutes(val route: String) {
 }
 
 @Composable
-fun NavGraphWelcome() {
+fun NavGraphWelcome(
+    navController: NavHostController,
+    viewModel: WelcomeViewModel = hiltViewModel()
+) {
+    if (viewModel.state.finished) {
+        NavHost(
+            navController = navController,
+            startDestination = if(viewModel.state.isInitial != -1){
+                WelcomeRoutes.NewsScreen.route
+            } else{
+                WelcomeRoutes.WelcomeScreenFirst.route
+            }
+        ) {
 
-    val navController = rememberNavController()
+            composable(WelcomeRoutes.WelcomeScreenFirst.route) {
+                WelcomeScreenFirst(navController = navController)
+            }
 
-    NavHost(
-        navController = navController,
-        startDestination = WelcomeRoutes.WelcomeScreenFirst.route
-    ) {
+            composable(WelcomeRoutes.WelcomeScreenSecond.route) {
+                WelcomeScreenSecond(navController = navController)
+            }
 
-        composable(WelcomeRoutes.WelcomeScreenFirst.route) {
-            WelcomeScreenFirst(navController = navController)
-        }
+            composable(WelcomeRoutes.WelcomeScreenThird.route) {
+                WelcomeScreenThird(navController = navController)
+            }
 
-        composable(WelcomeRoutes.WelcomeScreenFirst.route) {
-            WelcomeScreenSecond(navController = navController)
-        }
-
-        composable(WelcomeRoutes.WelcomeScreenFirst.route) {
-            WelcomeScreenThird(navController = navController)
-        }
-
-        composable(WelcomeRoutes.NewsScreen.route) {
-            NewsScreen(navController = navController)
+            composable(WelcomeRoutes.NewsScreen.route) {
+                NewsScreen(navController = navController)
+            }
         }
     }
 }

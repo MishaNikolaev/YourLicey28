@@ -13,14 +13,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WelcomeViewModel @Inject constructor(
-    private val repository : Repository
-) : ViewModel(){
+    private val repository: Repository
+) : ViewModel() {
 
     var state by mutableStateOf(WelcomeState())
-    fun beginClicked(){
 
+    init {
         viewModelScope.launch {
-            repository.setValue(OPENED_FIRST, "logged_in")
+            val dataStoreValue = repository.readValue(OPENED_FIRST)
+            if (dataStoreValue != null) {
+                state = state.copy(isInitial = 1)
+            }
             state = state.copy(finished = true)
         }
     }
