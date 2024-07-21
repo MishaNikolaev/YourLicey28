@@ -94,9 +94,10 @@ fun WelcomeScreenFirst(navController: NavController) {
                 },
                 style = LocalTextStyle.current.copy(
                     fontFamily = roboto,
+                    fontWeight = FontWeight.Bold,
                     color = Color.White,
                     fontSize = 16.sp,
-                ), modifier = Modifier.padding(start = 30.dp,top = 10.dp)
+                ), modifier = Modifier.padding(start = 20.dp,top = 10.dp)
             )
             Spacer(modifier = Modifier.width(180.dp))
 
@@ -154,12 +155,11 @@ fun WelcomeScreenSecond(navController: NavController) {
             .verticalScroll(rememberScrollState())
     ) {
         Image(
-            painter = painterResource(id = R.drawable.calendar),
+            painter = painterResource(id = R.drawable.education),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .height(400.dp)
-                .width(400.dp)
+                .size(340.dp)
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
@@ -192,9 +192,10 @@ fun WelcomeScreenSecond(navController: NavController) {
                 },
                 style = LocalTextStyle.current.copy(
                     fontFamily = roboto,
+                    fontWeight = FontWeight.Bold,
                     color = Color.White,
                     fontSize = 16.sp,
-                ), modifier = Modifier.padding(start = 30.dp,top = 10.dp)
+                ), modifier = Modifier.padding(start = 20.dp,top = 10.dp)
             )
             Spacer(modifier = Modifier.width(180.dp))
 
@@ -254,12 +255,12 @@ fun WelcomeScreenThird(
             .verticalScroll(rememberScrollState())
     ) {
         Image(
-            painter = painterResource(id = R.drawable.man),
+            painter = painterResource(id = R.drawable.saly_18),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .height(400.dp)
-                .width(400.dp)
+                .height(380.dp)
+                .width(380.dp)
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
@@ -293,7 +294,6 @@ fun WelcomeScreenThird(
                     .size(45.dp)
                     .background(BlueLC)
                     .clickable {
-                        viewModel.beginClicked()
                         navController.navigate(WelcomeRoutes.NewsScreen.route)
                     }
             ) {
