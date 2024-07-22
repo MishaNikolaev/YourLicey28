@@ -300,7 +300,7 @@ fun MemberCard(member: ProjectMember) {
             context.startActivity(intent)
         },
         colors = CardDefaults.cardColors(
-            containerColor = WhiteLC
+            containerColor = Color.White
         ),
     ) {
         Row(

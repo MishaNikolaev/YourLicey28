@@ -95,4 +95,11 @@ dependencies {
     //AppDataStore
     implementation(libs.androidx.datastore.preferences)
 
+    //Jsoup
+    implementation("org.jsoup:jsoup:1.15.2")
+
+    //Glide
+    implementation("com.github.skydoves:landscapist-glide:1.4.8")
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.yourlicey28.presentation.activityComponents
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,6 +26,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.yourlicey28.R
 import com.example.yourlicey28.presentation.news.NewsScreen
+import com.example.yourlicey28.presentation.news.NewsViewModel
 import com.example.yourlicey28.presentation.profile.ProfileScreen
 import com.example.yourlicey28.presentation.settings.SettingsScreen
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenFirst
@@ -42,6 +44,7 @@ sealed class WelcomeRoutes(val route: String) {
     object NewsScreen : WelcomeRoutes("news_screen")
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NavGraphWelcome(
     navController: NavHostController,
@@ -70,7 +73,8 @@ fun NavGraphWelcome(
             }
 
             composable(WelcomeRoutes.NewsScreen.route) {
-                NewsScreen(navController = navController)
+                //val viewModel:NewsViewModel = hiltViewModel()
+                NewsScreen()
             }
         }
     }
@@ -144,6 +148,7 @@ sealed class BottomNavItem(val route: String, val icon: Int, val activeIcon: Int
     object Settings : BottomNavItem("settings", R.drawable.settings_no, R.drawable.settings, "Настройки")
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(
@@ -152,7 +157,7 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modif
         modifier = modifier
     ) {
         composable(BottomNavItem.News.route) {
-            NewsScreen(navController)
+            NewsScreen()
         }
         composable(BottomNavItem.Profile.route) {
             ProfileScreen(navController)
