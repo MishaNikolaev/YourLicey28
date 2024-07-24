@@ -1,5 +1,6 @@
 package com.example.yourlicey28.data.parser
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -7,12 +8,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.yourlicey28.domain.model.LinkTextData
 import com.example.yourlicey28.domain.model.News
+import com.example.yourlicey28.ui.theme.DarkBlueLC
+import com.example.yourlicey28.ui.theme.monterrat
 import com.example.yourlicey28.ui.theme.roboto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -160,12 +166,12 @@ private fun createAnnotatedString(data: List<LinkTextData>): AnnotatedString {
                     style = SpanStyle(
                         color = Color.Black,
                         fontFamily = roboto,
-                        fontSize = 9.sp
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Normal
                     ),
                 ) {
                     append(linkTextData.text)
                 }
-//append(linkTextData.text)
             }
         }
     }
