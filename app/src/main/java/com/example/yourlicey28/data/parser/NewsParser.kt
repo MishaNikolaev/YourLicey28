@@ -47,7 +47,7 @@ class NewParser @Inject constructor():Parser<News> {
                     val photo =
                         "http://www.s_28.edu54.ru/" + trs[i].getElementsByTag("td")[0].getElementsByTag(
                             "img"
-                        ).last()!!
+                        ).first()!!
                             .attr("src")
                     if (text.isNotEmpty()) {
 //asdsad https:: asdsadsad

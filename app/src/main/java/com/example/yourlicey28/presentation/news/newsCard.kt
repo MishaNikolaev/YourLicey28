@@ -8,12 +8,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.BookmarkBorder
+import androidx.compose.material.icons.filled.Comment
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
@@ -37,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import com.example.yourlicey28.data.parser.LinkText
 import com.example.yourlicey28.domain.model.LinkTextData
 import com.example.yourlicey28.domain.model.News
+import com.example.yourlicey28.ui.theme.LightGreenLC
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
@@ -86,14 +92,20 @@ fun NewsCard(news: News) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(4.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.End
             ) {
-            }
 
-            IconButton(onClick = {
+                IconButton(onClick = {
 
-            }) {
-                Icon(Icons.Default.FavoriteBorder, contentDescription = "Like")
+                }) {
+                    Icon(Icons.Default.FavoriteBorder, contentDescription = "like")
+                }
+
+                IconButton(onClick = {
+
+                }) {
+                    Icon(Icons.Default.BookmarkBorder, contentDescription = "important")
+                }
             }
         }
     }
