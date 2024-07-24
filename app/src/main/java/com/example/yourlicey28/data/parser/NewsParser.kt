@@ -43,14 +43,12 @@ class NewParser @Inject constructor():Parser<News> {
 
                 try {
                     var text = trs[i].getElementsByTag("td")[0].text()
-//println("TEXT = $text")
                     val photo =
                         "http://www.s_28.edu54.ru/" + trs[i].getElementsByTag("td")[0].getElementsByTag(
                             "img"
                         ).first()!!
                             .attr("src")
                     if (text.isNotEmpty()) {
-//asdsad https:: asdsadsad
                         val pair = getHyperLinks(text)
                         if (pair.first != -1 && pair.second != -1) {
                             val listLinkTextData = listOf(
