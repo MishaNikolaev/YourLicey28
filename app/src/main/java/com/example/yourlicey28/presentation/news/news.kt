@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.text.TextStyle
@@ -36,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.yourlicey28.ui.theme.DarkLC
 import com.example.yourlicey28.ui.theme.LightBlueLC
 import com.example.yourlicey28.ui.theme.WhiteLC
 import com.example.yourlicey28.ui.theme.monterrat
@@ -97,7 +99,7 @@ fun NewsScreen(viewModel: NewsViewModel = hiltViewModel()
 @Composable
 fun TabItem(selectedTab: String, tabName: String, onClicked: () -> Unit) {
     Box(
-        modifier = Modifier.height(45.dp).width(100.dp)
+        modifier = Modifier.height(45.dp).width(100.dp).clip(RoundedCornerShape(20.dp))
             .background(
                 color = if (selectedTab == tabName) LightBlueLC else Color.Transparent,
                 shape = RoundedCornerShape(16.dp)
@@ -111,7 +113,7 @@ fun TabItem(selectedTab: String, tabName: String, onClicked: () -> Unit) {
             fontSize = 15.sp,
             fontFamily = roboto,
             fontWeight = FontWeight.Bold,
-            color = if (selectedTab == tabName) DarkGray else Color(0xFF888899)
+            color = if (selectedTab == tabName) DarkLC else Color(0xFF888899)
         )
     }
 }
