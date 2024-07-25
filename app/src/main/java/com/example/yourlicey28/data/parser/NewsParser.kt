@@ -39,8 +39,9 @@ class NewParser @Inject constructor():Parser<News> {
             val tbody = text?.getElementsByTag("tbody")?.get(0)
             val trs = tbody?.children()
 
-            for (i in 1 until trs!!.size) {
+            var counter = 1
 
+            for (i in 1 until trs!!.size) {
                 try {
                     var text = trs[i].getElementsByTag("td")[0].text()
                     val photo =
@@ -67,6 +68,7 @@ class NewParser @Inject constructor():Parser<News> {
 
                             news.add(
                                 News(
+                                    id = counter,
                                     text = listLinkTextData,
                                     photo = photo
                                 )
@@ -75,6 +77,7 @@ class NewParser @Inject constructor():Parser<News> {
                         } else {
                             news.add(
                                 News(
+                                    id = counter,
                                     text = listOf(
                                         LinkTextData(
                                             text = text
@@ -88,6 +91,7 @@ class NewParser @Inject constructor():Parser<News> {
                 } catch (ex: Exception) {
 
                 }
+                counter ++
             }
             news
         }

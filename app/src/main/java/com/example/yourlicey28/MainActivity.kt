@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val navController = rememberNavController()
+//            val navController = rememberNavController()
 
             //NavGraphWelcome(navController = navController)
 

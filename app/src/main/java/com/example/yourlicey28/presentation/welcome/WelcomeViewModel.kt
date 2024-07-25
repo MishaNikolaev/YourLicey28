@@ -27,10 +27,12 @@ class WelcomeViewModel @Inject constructor(
             state = state.copy(finished = true)
         }
     }
+
     fun beginClicked(){
         viewModelScope.launch {
             repository.setValue(OPENED_FIRST,"logged_in")
             state = state.copy(finished = true)
         }
     }
+
 }
