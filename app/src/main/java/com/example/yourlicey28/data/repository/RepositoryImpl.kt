@@ -1,6 +1,7 @@
 package com.example.yourlicey28.data.repository
 
 import com.example.yourlicey28.data.datastore.AppData
+import com.example.yourlicey28.data.local.AppDatabase
 import com.example.yourlicey28.data.parser.NewParser
 import com.example.yourlicey28.domain.model.News
 import com.example.yourlicey28.domain.repository.Repository
@@ -13,7 +14,8 @@ import javax.inject.Singleton
 @Singleton
 class RepositoryImpl @Inject constructor(
     val appDataStoreManager: AppData,
-    val newsParser: NewParser
+    val newsParser: NewParser,
+    val db: AppDatabase
 ) : Repository {
 
     override suspend fun parseNews(): List<News> {
@@ -41,6 +43,10 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun readValue(key: String): String? {
         return appDataStoreManager.readValue(key)
+    }
+
+    suspend fun example(){
+//        db.userDao()
     }
 
 }

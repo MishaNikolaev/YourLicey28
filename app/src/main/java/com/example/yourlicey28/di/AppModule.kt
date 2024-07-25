@@ -1,8 +1,10 @@
 package com.example.yourlicey28.di
 
 import android.app.Application
+import androidx.room.Room
 import com.example.yourlicey28.data.datastore.AppData
 import com.example.yourlicey28.data.datastore.AppDataStoreManager
+import com.example.yourlicey28.data.local.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,5 +21,15 @@ object AppModule {
         context: Application
     ): AppData {
         return AppDataStoreManager(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(app: Application): AppDatabase {
+        return Room.databaseBuilder(
+            app,
+            AppDatabase::class.java,
+            "database-name.db"
+        ).build()
     }
 }

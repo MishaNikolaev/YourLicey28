@@ -101,5 +101,10 @@ dependencies {
     //Glide
     implementation("com.github.skydoves:landscapist-glide:1.4.8")
 
+    //Room
+    implementation("androidx.room:room-runtime:2.5.2")
+    kapt("androidx.room:room-compiler:2.5.2")
+    implementation("androidx.room:room-ktx:2.5.2")
+
 
 }

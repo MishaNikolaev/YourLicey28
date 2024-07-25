@@ -1,5 +1,6 @@
 package com.example.yourlicey28.presentation.activityComponents
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
@@ -37,6 +38,7 @@ import com.example.yourlicey28.ui.theme.BlueLC
 import com.example.yourlicey28.ui.theme.GrayLC
 import com.example.yourlicey28.ui.theme.LightBlueLC
 
+private const val TAG = "NavGraph"
 sealed class WelcomeRoutes(val route: String) {
     object WelcomeScreenFirst : WelcomeRoutes("welcome_screen_first")
     object WelcomeScreenSecond : WelcomeRoutes("welcome_screen_second")
@@ -74,7 +76,12 @@ fun NavGraphWelcome(
 
             composable(WelcomeRoutes.NewsScreen.route) {
                 //val viewModel:NewsViewModel = hiltViewModel()
-                NewsScreen()
+//                NewsScreen()
+                Scaffold(
+                    bottomBar = { BottomNavigationBar(rememberNavController()) }
+                ) { innerPadding ->
+                    NavigationGraph(navController = rememberNavController(), modifier = Modifier.padding(innerPadding))
+                }
             }
         }
     }
