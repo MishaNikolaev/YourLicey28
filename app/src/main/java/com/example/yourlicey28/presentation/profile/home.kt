@@ -1,18 +1,13 @@
 package com.example.yourlicey28.presentation.profile
 
-import android.content.Intent
-import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,39 +17,27 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.example.yourlicey28.R
-import com.example.yourlicey28.presentation.settings.MemberCard
-import com.example.yourlicey28.ui.theme.BlueLC
-import com.example.yourlicey28.ui.theme.DarkBlueLC
 import com.example.yourlicey28.ui.theme.LightBlueLC
 import com.example.yourlicey28.ui.theme.WhiteLC
 import com.example.yourlicey28.ui.theme.monterrat
-import com.example.yourlicey28.ui.theme.roboto
 
 data class Images(
     @DrawableRes val imageRes: Int,
@@ -98,7 +81,7 @@ val imagesListDown = listOf(
 
 
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun HomeScreen(navController: NavController) {
     val context = LocalContext.current
 
     Column(
@@ -107,35 +90,7 @@ fun ProfileScreen(navController: NavController) {
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-        Text(
-            text = "Профиль",
-            fontSize = 22.sp,
-            fontFamily = monterrat,
-            fontWeight = FontWeight.Bold,
-            color = Color.DarkGray,
-            modifier = Modifier
-                .padding(start = 20.dp, top = 20.dp)
-        )
-
-        Image(
-            painter = painterResource(id = R.drawable.owlim),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .height(139.dp)
-                .padding(start = 20.dp, top = 20.dp)
-                .width(117.dp)
-        )
-
-        Text(
-            text = "г. Новосибирск, Лицей №28",
-            fontSize = 16.sp,
-            fontFamily = monterrat,
-            fontWeight = FontWeight.Medium,
-            color = Color.DarkGray,
-            modifier = Modifier
-                .padding(start = 20.dp, top = 20.dp)
-        )
+        //ImageCarousel here
 
         Text(
             text = "Популярное",

@@ -28,7 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.yourlicey28.R
 import com.example.yourlicey28.presentation.news.NewsScreen
 import com.example.yourlicey28.presentation.news.NewsViewModel
-import com.example.yourlicey28.presentation.profile.ProfileScreen
+import com.example.yourlicey28.presentation.profile.HomeScreen
 import com.example.yourlicey28.presentation.settings.SettingsScreen
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenFirst
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenSecond
@@ -107,8 +107,8 @@ fun MainScreen() {
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
     val items = listOf(
+        BottomNavItem.Home,
         BottomNavItem.News,
-        BottomNavItem.Profile,
         BottomNavItem.Settings
     )
 
@@ -150,8 +150,8 @@ fun BottomNavigationBar(navController: NavHostController) {
 }
 
 sealed class BottomNavItem(val route: String, val icon: Int, val activeIcon: Int, val title: String) {
+    object Home : BottomNavItem("home", R.drawable.homeno, R.drawable.home_2, "Главная")
     object News : BottomNavItem("news", R.drawable.newsic_no, R.drawable.newsic, "Новости")
-    object Profile : BottomNavItem("profile", R.drawable.profileic_no, R.drawable.profileic, "Профиль")
     object Settings : BottomNavItem("settings", R.drawable.settings_no, R.drawable.settings, "Настройки")
 }
 
@@ -160,14 +160,14 @@ sealed class BottomNavItem(val route: String, val icon: Int, val activeIcon: Int
 fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(
         navController = navController,
-        startDestination = BottomNavItem.News.route,
+        startDestination = BottomNavItem.Home.route,
         modifier = modifier
     ) {
+        composable(BottomNavItem.Home.route) {
+            HomeScreen(navController)
+        }
         composable(BottomNavItem.News.route) {
             NewsScreen()
-        }
-        composable(BottomNavItem.Profile.route) {
-            ProfileScreen(navController)
         }
         composable(BottomNavItem.Settings.route) {
 //            val viewModel:HomeViewModel = hiltViewModel()
