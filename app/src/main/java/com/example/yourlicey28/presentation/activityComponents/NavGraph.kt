@@ -1,17 +1,13 @@
 package com.example.yourlicey28.presentation.activityComponents
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -19,7 +15,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -27,14 +22,18 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.yourlicey28.R
 import com.example.yourlicey28.presentation.news.NewsScreen
-import com.example.yourlicey28.presentation.news.NewsViewModel
-import com.example.yourlicey28.presentation.profile.HomeScreen
+import com.example.yourlicey28.presentation.home.HomeScreen
+import com.example.yourlicey28.presentation.home.components.popular.KruzhokScreen
+import com.example.yourlicey28.presentation.home.components.popular.MyTeachersScreen
+import com.example.yourlicey28.presentation.home.components.popular.TimeTableScreen
+import com.example.yourlicey28.presentation.home.components.services.EnterToFirstClass
+import com.example.yourlicey28.presentation.home.components.services.EnterToTenClass
+import com.example.yourlicey28.presentation.home.components.services.PhotoGallery
 import com.example.yourlicey28.presentation.settings.SettingsScreen
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenFirst
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenSecond
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenThird
 import com.example.yourlicey28.presentation.welcome.WelcomeViewModel
-import com.example.yourlicey28.ui.theme.BlueLC
 import com.example.yourlicey28.ui.theme.GrayLC
 import com.example.yourlicey28.ui.theme.LightBlueLC
 
@@ -44,24 +43,26 @@ sealed class WelcomeRoutes(val route: String) {
     object WelcomeScreenSecond : WelcomeRoutes("welcome_screen_second")
     object WelcomeScreenThird : WelcomeRoutes("welcome_screen_third")
     object NewsScreen : WelcomeRoutes("news_screen")
+    object KruzhokScreen : WelcomeRoutes("kruzhok_screen")
+    object TimeTableScreen : WelcomeRoutes("time_table_screen")
+    object MyTeachersScreen : WelcomeRoutes("my_teachers_screen")
+    object EnterToFirstClass : WelcomeRoutes("enter_to_first_class")
+    object EnterToTenClass : WelcomeRoutes("enter_to_ten_class")
+    object Photogallery : WelcomeRoutes("photogallery")
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun NavGraphWelcome(
-    navController: NavHostController,
-    viewModel: WelcomeViewModel = hiltViewModel()
-) {
+fun NavGraphWelcome(navController: NavHostController, viewModel: WelcomeViewModel = hiltViewModel()) {
     if (viewModel.state.finished) {
         NavHost(
             navController = navController,
-            startDestination = if(viewModel.state.isInitial != -1){
+            startDestination = if (viewModel.state.isInitial != -1) {
                 WelcomeRoutes.NewsScreen.route
-            } else{
+            } else {
                 WelcomeRoutes.WelcomeScreenFirst.route
             }
         ) {
-
             composable(WelcomeRoutes.WelcomeScreenFirst.route) {
                 WelcomeScreenFirst(navController = navController)
             }
@@ -75,17 +76,39 @@ fun NavGraphWelcome(
             }
 
             composable(WelcomeRoutes.NewsScreen.route) {
-                //val viewModel:NewsViewModel = hiltViewModel()
-//                NewsScreen()
                 Scaffold(
                     bottomBar = { BottomNavigationBar(rememberNavController()) }
                 ) { innerPadding ->
                     NavigationGraph(navController = rememberNavController(), modifier = Modifier.padding(innerPadding))
                 }
             }
+
+            composable(WelcomeRoutes.KruzhokScreen.route) {
+                KruzhokScreen(navController = navController)
+            }
+            composable(WelcomeRoutes.TimeTableScreen.route) {
+                TimeTableScreen(navController = navController)
+            }
+
+            composable(WelcomeRoutes.MyTeachersScreen.route) {
+                MyTeachersScreen(navController = navController)
+            }
+
+            composable(WelcomeRoutes.EnterToFirstClass.route) {
+                EnterToFirstClass(navController = navController)
+            }
+
+            composable(WelcomeRoutes.EnterToTenClass.route) {
+                EnterToTenClass(navController = navController)
+            }
+
+            composable(WelcomeRoutes.Photogallery.route) {
+                PhotoGallery(navController = navController)
+            }
         }
     }
 }
+
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
@@ -172,6 +195,28 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modif
         composable(BottomNavItem.Settings.route) {
 //            val viewModel:HomeViewModel = hiltViewModel()
             SettingsScreen(navController)
+        }
+        composable(WelcomeRoutes.KruzhokScreen.route) {
+            KruzhokScreen(navController = navController)
+        }
+        composable(WelcomeRoutes.TimeTableScreen.route) {
+            TimeTableScreen(navController = navController)
+        }
+
+        composable(WelcomeRoutes.MyTeachersScreen.route) {
+            MyTeachersScreen(navController = navController)
+        }
+
+        composable(WelcomeRoutes.EnterToFirstClass.route) {
+            EnterToFirstClass(navController = navController)
+        }
+
+        composable(WelcomeRoutes.EnterToTenClass.route) {
+            EnterToTenClass(navController = navController)
+        }
+
+        composable(WelcomeRoutes.Photogallery.route) {
+            PhotoGallery(navController = navController)
         }
     }
 }
