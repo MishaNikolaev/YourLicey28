@@ -24,7 +24,7 @@ import com.example.yourlicey28.R
 import com.example.yourlicey28.presentation.news.NewsScreen
 import com.example.yourlicey28.presentation.home.HomeScreen
 import com.example.yourlicey28.presentation.home.components.popular.KruzhokScreen
-import com.example.yourlicey28.presentation.home.components.popular.MyTeachersScreen
+import com.example.yourlicey28.presentation.home.components.popular.teacher.MyTeachersScreen
 import com.example.yourlicey28.presentation.home.components.popular.TimeTableScreen
 import com.example.yourlicey28.presentation.home.components.services.EnterToFirstClass
 import com.example.yourlicey28.presentation.home.components.services.EnterToTenClass
@@ -43,6 +43,7 @@ sealed class WelcomeRoutes(val route: String) {
     object WelcomeScreenSecond : WelcomeRoutes("welcome_screen_second")
     object WelcomeScreenThird : WelcomeRoutes("welcome_screen_third")
     object NewsScreen : WelcomeRoutes("news_screen")
+    object HomeScreen : WelcomeRoutes("home_screen")
     object KruzhokScreen : WelcomeRoutes("kruzhok_screen")
     object TimeTableScreen : WelcomeRoutes("time_table_screen")
     object MyTeachersScreen : WelcomeRoutes("my_teachers_screen")
@@ -104,6 +105,10 @@ fun NavGraphWelcome(navController: NavHostController, viewModel: WelcomeViewMode
 
             composable(WelcomeRoutes.Photogallery.route) {
                 PhotoGallery(navController = navController)
+            }
+
+            composable(WelcomeRoutes.HomeScreen.route) {
+                HomeScreen(navController)
             }
         }
     }
@@ -217,6 +222,9 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modif
 
         composable(WelcomeRoutes.Photogallery.route) {
             PhotoGallery(navController = navController)
+        }
+        composable(WelcomeRoutes.HomeScreen.route) {
+            HomeScreen(navController)
         }
     }
 }
