@@ -25,6 +25,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -155,121 +157,142 @@ fun HomeScreen(navController: NavHostController) {
             modifier = Modifier
                 .padding(start = 20.dp, top = 20.dp)
         )
-                    Box(
-                        modifier = Modifier
-                            .padding(top = 15.dp, start = 20.dp)
-                            .clip(RoundedCornerShape(20.dp))
-                            .background(Color.White)
-                            .fillMaxWidth(0.95f)
-                            .height(100.dp)
-                            .clickable {
-
-                            }
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .background(Color(0xFFFFCC99))
-                                .fillMaxSize()
-                                .clip(RoundedCornerShape(20.dp))
-                        )
-                        Column(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.m_liceyphoto),
-                                    contentDescription = "",
-                                    modifier = Modifier.clip(CircleShape)
-                                        .size(50.dp)
-
-                                )
-                                Spacer(modifier = Modifier.width(10.dp))
-                                Text(
-                                    text = "Лицей №28",
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Normal,
-                                    color = Color.Black,
-                                    modifier = Modifier.weight(1f)
-                                )
-                                Icon(
-                                    imageVector = Icons.Default.ArrowForward,
-                                    contentDescription = "Arrow",
-                                    modifier = Modifier
-                                        .size(30.dp)
-                                )
-                            }
-                            Text(
-                                text = "Перейти на официальный сайт",
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Normal,
-                                color = Color(0xFF414040),
-                                modifier = Modifier
-                                    .padding(start = 50.dp)
-                                    .align(Alignment.Start)
-                            )
-                        }
-                    }
-
-        Box(
+        Card(
             modifier = Modifier
                 .padding(top = 15.dp, start = 20.dp)
-                .clip(RoundedCornerShape(20.dp))
-                .background(Color.White)
                 .fillMaxWidth(0.95f)
                 .height(100.dp)
                 .clickable {
 
-                }
+                },
+            shape = RoundedCornerShape(20.dp),
+            elevation = CardDefaults.cardElevation(4.dp),
         ) {
             Box(
                 modifier = Modifier
-                    .background(Color(0xFFCCFFCC))
-                    .fillMaxSize()
                     .clip(RoundedCornerShape(20.dp))
-            )
-            Column(
-                modifier = Modifier.padding(10.dp)
+                    .background(Color.White)
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
+                Box(
+                    modifier = Modifier
+                        .background(
+                            brush = Brush.linearGradient(
+                                colors = listOf(Color(0xFFE3F2FD), Color(0xFFFFF9C4))
+                            )
+                        )
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(20.dp))
+                )
+                Column(
+                    modifier = Modifier.padding(10.dp)
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.pabe9y0mis4f64xs),
-                        contentDescription = "",
-                        modifier = Modifier.clip(CircleShape)
-                            .size(50.dp)
-
-                    )
-                    Spacer(modifier = Modifier.width(10.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.m_liceyphoto),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .size(50.dp)
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "Лицей №28",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = Color.Black,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Icon(
+                            imageVector = Icons.Default.ArrowForward,
+                            contentDescription = "Arrow",
+                            modifier = Modifier
+                                .size(30.dp)
+                        )
+                    }
                     Text(
-                        text = "Сообщество Лицея №28",
-                        fontSize = 16.sp,
+                        text = "Перейти на официальный сайт",
+                        fontSize = 14.sp,
                         fontWeight = FontWeight.Normal,
-                        color = Color.Black,
-                        modifier = Modifier.weight(1f)
-                    )
-                    Icon(
-                        imageVector = Icons.Default.ArrowForward,
-                        contentDescription = "Arrow",
+                        color = Color(0xFF414040),
                         modifier = Modifier
-                            .size(30.dp)
+                            .padding(start = 50.dp)
+                            .align(Alignment.Start)
                     )
                 }
-                Text(
-                    text = "Перейти в сообщество лицея ВКонтакте",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = Color(0xFF414040),
-                    modifier = Modifier
-                        .padding(start = 50.dp)
-                        .align(Alignment.Start)
-                )
             }
         }
+
+        Card(
+            modifier = Modifier
+                .padding(top = 15.dp, start = 20.dp)
+                .fillMaxWidth(0.95f)
+                .height(100.dp)
+                .clickable {
+
+                },
+            shape = RoundedCornerShape(20.dp),
+            elevation = CardDefaults.cardElevation(4.dp),
+        ) {
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(Color.White)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .background(
+                            brush = Brush.linearGradient(
+                                colors = listOf(Color(0xFFE6E6FA), Color(0xFFB0E0E6))
+                            )
+                        )
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(20.dp))
+                )
+                Column(
+                    modifier = Modifier.padding(10.dp)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.pabe9y0mis4f64xs),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .size(50.dp)
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "Сообщество Лицея №28",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = Color.Black,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Icon(
+                            imageVector = Icons.Default.ArrowForward,
+                            contentDescription = "Arrow",
+                            modifier = Modifier
+                                .size(30.dp)
+                        )
+                    }
+                    Text(
+                        text = "Перейти в сообщество лицея ВКонтакте",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Normal,
+                        color = Color(0xFF414040),
+                        modifier = Modifier
+                            .padding(start = 50.dp)
+                            .align(Alignment.Start)
+                    )
+                }
+            }
+        }
+        Spacer(modifier = Modifier.height(20.dp))
     }
 }
 
@@ -341,7 +364,7 @@ fun ImagesItemDown(
 ) {
     val titleDown = titleListDown[index]
     val backgroundColor = when (titleDown.title) {
-        "Приём в 1 класс" -> Color(0xFFCCFFFF)
+        "Приём в 1 класс" -> Color(0xFFC7F1C8)
         "Приём в 10 класс" -> Color(0xFFFDBAD1)
         "О лицее" -> Color(0xFFFFE8A5)
         else -> Color.White
@@ -361,7 +384,7 @@ fun ImagesItemDown(
                     else -> {}
                 }
             },
-        elevation = CardDefaults.cardElevation(4.dp),
+        elevation = CardDefaults.cardElevation(8.dp),
         colors = CardDefaults.cardColors(
             containerColor = backgroundColor
         )
