@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,10 +17,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -39,9 +45,11 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.yourlicey28.R
 import com.example.yourlicey28.presentation.activityComponents.WelcomeRoutes
+import com.example.yourlicey28.ui.theme.DarkLC
 import com.example.yourlicey28.ui.theme.LightBlueLC
 import com.example.yourlicey28.ui.theme.WhiteLC
 import com.example.yourlicey28.ui.theme.monterrat
+import com.example.yourlicey28.ui.theme.roboto
 import kotlinx.coroutines.delay
 
 data class Images(
@@ -49,9 +57,10 @@ data class Images(
     val title: String,
 )
 
-data class ImagesDown(
-    @DrawableRes val imageRes: Int,
+data class TitleDown(
     val title: String,
+    val info: String,
+    val bottomText: String
 )
 
 val imagesList = listOf(
@@ -64,23 +73,28 @@ val imagesList = listOf(
         title = "Кружок28",
     ),
     Images(
-        imageRes = R.drawable.uchitel,
+        imageRes = R.drawable.teacher_concept_illustration__1_,
         title = "Мои учителя",
     ),
 )
 
-val imagesListDown = listOf(
-    ImagesDown(
-        imageRes = R.drawable.view_school_classroom,
+val titleListDown = listOf(
+    TitleDown(
         title = "Приём в 1 класс",
+        info = "Планируется набор четырёх первых классов общей наполняемостью 120 человек. Предварительная запись производится по вторникам и четвергам с 8:30 до 11:30 по телефону 271-98-41.",
+        bottomText = "Документы"
     ),
-    ImagesDown(
-        imageRes = R.drawable.tenclass,
+    TitleDown(
         title = "Приём в 10 класс",
+        info = "Предварительная подача заявлений с 17.06.2024 г. по 25.06.2024 г." +
+                "\nПрием и экспертиза представленных документов с 25.06.2024 г.  по 27.06.2024 г." +
+                "\nИндивидуальное собеседование 28.06.2024 г.",
+        bottomText = "Документы"
     ),
-    ImagesDown(
-        imageRes = R.drawable.school28profile,
-        title = "Фотогаллерея",
+    TitleDown(
+        title = "О лицее",
+        info = "На протяжении многих лет в лицее реализуется концепция инженерного образования: с 5 класса начинается изучение физики, химии, информатики, с 7 – углубленное изучение математики, информатики, физики.",
+        bottomText = "Документы"
     ),
 )
 
@@ -108,8 +122,10 @@ fun HomeScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(20.dp))
         LazyRow {
             items(imagesList.size) {
-                ImagesItem(it,
-                    navController = navController)
+                ImagesItem(
+                    it,
+                    navController = navController
+                )
             }
         }
         Text(
@@ -123,9 +139,11 @@ fun HomeScreen(navController: NavHostController) {
         )
         Spacer(modifier = Modifier.height(20.dp))
         LazyRow {
-            items(imagesListDown.size) {
-                ImagesItemDown(it,
-                    navController = navController)
+            items(titleListDown.size) {
+                ImagesItemDown(
+                    it,
+                    navController = navController
+                )
             }
         }
         Text(
@@ -137,76 +155,137 @@ fun HomeScreen(navController: NavHostController) {
             modifier = Modifier
                 .padding(start = 20.dp, top = 20.dp)
         )
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 15.dp, start = 20.dp)
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(Color.White)
+                            .fillMaxWidth(0.95f)
+                            .height(100.dp)
+                            .clickable {
+
+                            }
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .background(Color(0xFFFFCC99))
+                                .fillMaxSize()
+                                .clip(RoundedCornerShape(20.dp))
+                        )
+                        Column(
+                            modifier = Modifier.padding(10.dp)
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.m_liceyphoto),
+                                    contentDescription = "",
+                                    modifier = Modifier.clip(CircleShape)
+                                        .size(50.dp)
+
+                                )
+                                Spacer(modifier = Modifier.width(10.dp))
+                                Text(
+                                    text = "Лицей №28",
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Normal,
+                                    color = Color.Black,
+                                    modifier = Modifier.weight(1f)
+                                )
+                                Icon(
+                                    imageVector = Icons.Default.ArrowForward,
+                                    contentDescription = "Arrow",
+                                    modifier = Modifier
+                                        .size(30.dp)
+                                )
+                            }
+                            Text(
+                                text = "Перейти на официальный сайт",
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Normal,
+                                color = Color(0xFF414040),
+                                modifier = Modifier
+                                    .padding(start = 50.dp)
+                                    .align(Alignment.Start)
+                            )
+                        }
+                    }
+
         Box(
             modifier = Modifier
                 .padding(top = 15.dp, start = 20.dp)
                 .clip(RoundedCornerShape(20.dp))
-                .background(WhiteLC)
+                .background(Color.White)
                 .fillMaxWidth(0.95f)
-                .height(60.dp)
-                .clickable {
-
-                }
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.licey28),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(RoundedCornerShape(20.dp))
-            )
-
-
-            Text(
-                text = "Официальный сайт Лицея №28",
-                fontSize = 16.sp,
-                fontFamily = monterrat,
-                fontWeight = FontWeight.Bold,
-                color = WhiteLC,
-                modifier = Modifier
-                    .padding(15.dp)
-                    .align(Alignment.CenterStart)
-            )
-        }
-        Box(
-            modifier = Modifier
-                .padding(top = 15.dp, start = 20.dp)
-                .clip(RoundedCornerShape(20.dp))
-                .background(WhiteLC)
-                .fillMaxWidth(0.95f)
-                .height(60.dp)
+                .height(100.dp)
                 .clickable {
 
                 }
         ) {
             Box(
                 modifier = Modifier
-                    .background(LightBlueLC)
+                    .background(Color(0xFFCCFFCC))
                     .fillMaxSize()
                     .clip(RoundedCornerShape(20.dp))
             )
+            Column(
+                modifier = Modifier.padding(10.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.pabe9y0mis4f64xs),
+                        contentDescription = "",
+                        modifier = Modifier.clip(CircleShape)
+                            .size(50.dp)
 
-
-            Text(
-                text = "Сообщество Лицея №28",
-                fontSize = 16.sp,
-                fontFamily = monterrat,
-                fontWeight = FontWeight.Bold,
-                color = WhiteLC,
-                modifier = Modifier
-                    .padding(15.dp)
-                    .align(Alignment.CenterStart)
-            )
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Text(
+                        text = "Сообщество Лицея №28",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.Black,
+                        modifier = Modifier.weight(1f)
+                    )
+                    Icon(
+                        imageVector = Icons.Default.ArrowForward,
+                        contentDescription = "Arrow",
+                        modifier = Modifier
+                            .size(30.dp)
+                    )
+                }
+                Text(
+                    text = "Перейти в сообщество лицея ВКонтакте",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color(0xFF414040),
+                    modifier = Modifier
+                        .padding(start = 50.dp)
+                        .align(Alignment.Start)
+                )
+            }
         }
     }
 }
+
 @Composable
 fun ImagesItem(
     index: Int,
     navController: NavHostController
 ) {
     val images = imagesList[index]
+
+    val backgroundColor = when (images.title) {
+        "Расписание" -> Color(0xFFFFFFFF)
+        "Кружок28" -> Color(0xFFFFFFFF)
+        "Мои учителя" -> Color(0xFFFFFFFF)
+        else -> Color.White
+    }
 
     Card(
         shape = RoundedCornerShape(8.dp),
@@ -215,7 +294,7 @@ fun ImagesItem(
             .width(125.dp)
             .height(125.dp)
             .clickable {
-                when(images.title) {
+                when (images.title) {
                     "Расписание" -> navController.navigate(WelcomeRoutes.TimeTableScreen.route)
                     "Кружок28" -> navController.navigate(WelcomeRoutes.KruzhokScreen.route)
                     "Мои учителя" -> navController.navigate(WelcomeRoutes.MyTeachersScreen.route)
@@ -224,12 +303,12 @@ fun ImagesItem(
             },
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = backgroundColor
         )
     ) {
         Column(
             modifier = Modifier
-                .background(Color.White)
+                .background(backgroundColor)
                 .padding(8.dp)
                 .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
@@ -260,51 +339,77 @@ fun ImagesItemDown(
     index: Int,
     navController: NavHostController
 ) {
-    val imagesDown = imagesListDown[index]
+    val titleDown = titleListDown[index]
+    val backgroundColor = when (titleDown.title) {
+        "Приём в 1 класс" -> Color(0xFFCCFFFF)
+        "Приём в 10 класс" -> Color(0xFFFDBAD1)
+        "О лицее" -> Color(0xFFFFE8A5)
+        else -> Color.White
+    }
 
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
-            .padding(8.dp)
-            .width(125.dp)
-            .height(125.dp)
+            .padding(start = 10.dp)
+            .width(300.dp)
+            .height(170.dp)
             .clickable {
-                when(imagesDown.title) {
+                when (titleDown.title) {
                     "Приём в 1 класс" -> navController.navigate(WelcomeRoutes.EnterToFirstClass.route)
                     "Приём в 10 класс" -> navController.navigate(WelcomeRoutes.EnterToTenClass.route)
-                    "Фотогаллерея" -> navController.navigate(WelcomeRoutes.Photogallery.route)
+                    "О лицее" -> navController.navigate(WelcomeRoutes.Photogallery.route)
                     else -> {}
                 }
             },
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = backgroundColor
         )
     ) {
         Column(
             modifier = Modifier
-                .background(Color.White)
+                .background(backgroundColor)
                 .padding(8.dp)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxSize()
         ) {
-            Image(
-                painter = painterResource(id = imagesDown.imageRes),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(83.dp)
-                    .clip(RoundedCornerShape(20.dp))
-            )
-            Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = imagesDown.title,
-                fontSize = 12.sp,
+                text = titleDown.title,
+                fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.DarkGray,
+                fontFamily = roboto,
+                modifier = Modifier.align(Alignment.Start)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = titleDown.info,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Normal,
+                color = Color(0xFF666666),
+                fontFamily = roboto,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
+            Spacer(modifier = Modifier.height(14.dp))
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(20.dp))
+                    .clickable {
+
+                    }
+                    .height(40.dp)
+                    .width(95.dp)
+                    .background(Color.Black),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = titleDown.bottomText,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.White,
+                    fontFamily = roboto,
+                    //modifier = Modifier
+                )
+            }
         }
     }
 }

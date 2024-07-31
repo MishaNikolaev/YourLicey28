@@ -48,6 +48,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.yourlicey28.R
 import com.example.yourlicey28.ui.theme.DarkBlueLC
+import com.example.yourlicey28.ui.theme.DarkLC
 import com.example.yourlicey28.ui.theme.LightBlueLC
 import com.example.yourlicey28.ui.theme.RedLC
 import com.example.yourlicey28.ui.theme.WhiteLC
@@ -112,46 +113,7 @@ fun SettingsScreen(navController: NavController) {
                         .size(20.dp)
                 )
             }
-        }
 
-        Box(modifier = Modifier
-            .padding(top = 15.dp, start = 20.dp)
-            .clip(RoundedCornerShape(20.dp))
-            .background(WhiteLC)
-            .fillMaxWidth(0.95f)
-            .height(60.dp)
-            .clickable {
-
-            }) {
-            Row {
-                Icon(
-                    imageVector = Icons.Default.Notifications,
-                    contentDescription = "Add Icon",
-                    tint = Color.DarkGray,
-                    modifier = Modifier
-                        .size(36.dp)
-                        .padding(top = 10.dp, start = 10.dp)
-                )
-                Spacer(modifier = Modifier.width(30.dp))
-
-                Text(
-                    text = "Уведомления",
-                    fontSize = 16.sp,
-                    fontFamily = roboto,
-                    fontWeight = FontWeight.SemiBold,
-                    color = DarkBlueLC,
-                    modifier = Modifier.padding(top = 15.dp, start = 10.dp)
-                )
-                Spacer(modifier = Modifier.width(85.dp))
-                Icon(
-                    imageVector = Icons.Default.ArrowForwardIos,
-                    contentDescription = "Add Icon",
-                    tint = Color.DarkGray,
-                    modifier = Modifier
-                        .padding(top = 15.dp)
-                        .size(20.dp)
-                )
-            }
         }
         Row(
             modifier = Modifier
@@ -173,7 +135,7 @@ fun SettingsScreen(navController: NavController) {
 
             Box(
                 modifier = Modifier
-                    .size(35.dp)
+                    .size(35.dp).clip(RoundedCornerShape(10.dp))
                     .background(LightBlueLC),
                 contentAlignment = Alignment.Center
             ) {
@@ -182,7 +144,7 @@ fun SettingsScreen(navController: NavController) {
                     fontSize = 16.sp,
                     fontFamily = roboto,
                     fontWeight = FontWeight.SemiBold,
-                    color = WhiteLC,
+                    color = DarkLC,
                     modifier = Modifier.align(Alignment.Center)
                 )
             }
@@ -282,7 +244,7 @@ val members = listOf(
     ProjectMember(
         "https://avatars.githubusercontent.com/u/111734592?s=400&u=a54918d28c1e4037ad6a610c66b0424b1bb3a90f&v=4",
         "Mikhail Nikolaev",
-        22,
+        52,
         "https://github.com/MishaNikolaev"
     ),
 )
