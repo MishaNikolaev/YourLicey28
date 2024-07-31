@@ -26,9 +26,9 @@ import com.example.yourlicey28.presentation.home.HomeScreen
 import com.example.yourlicey28.presentation.home.components.popular.KruzhokScreen
 import com.example.yourlicey28.presentation.home.components.popular.teacher.MyTeachersScreen
 import com.example.yourlicey28.presentation.home.components.popular.TimeTableScreen
+import com.example.yourlicey28.presentation.home.components.services.AboutSchool
 import com.example.yourlicey28.presentation.home.components.services.EnterToFirstClass
 import com.example.yourlicey28.presentation.home.components.services.EnterToTenClass
-import com.example.yourlicey28.presentation.home.components.services.PhotoGallery
 import com.example.yourlicey28.presentation.settings.SettingsScreen
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenFirst
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenSecond
@@ -49,7 +49,7 @@ sealed class WelcomeRoutes(val route: String) {
     object MyTeachersScreen : WelcomeRoutes("my_teachers_screen")
     object EnterToFirstClass : WelcomeRoutes("enter_to_first_class")
     object EnterToTenClass : WelcomeRoutes("enter_to_ten_class")
-    object Photogallery : WelcomeRoutes("photogallery")
+    object AboutSchool : WelcomeRoutes("about_school")
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -103,8 +103,8 @@ fun NavGraphWelcome(navController: NavHostController, viewModel: WelcomeViewMode
                 EnterToTenClass(navController = navController)
             }
 
-            composable(WelcomeRoutes.Photogallery.route) {
-                PhotoGallery(navController = navController)
+            composable(WelcomeRoutes.AboutSchool.route) {
+                AboutSchool(navController = navController)
             }
 
             composable(WelcomeRoutes.HomeScreen.route) {
@@ -220,8 +220,8 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modif
             EnterToTenClass(navController = navController)
         }
 
-        composable(WelcomeRoutes.Photogallery.route) {
-            PhotoGallery(navController = navController)
+        composable(WelcomeRoutes.AboutSchool.route) {
+            AboutSchool(navController = navController)
         }
         composable(WelcomeRoutes.HomeScreen.route) {
             HomeScreen(navController)

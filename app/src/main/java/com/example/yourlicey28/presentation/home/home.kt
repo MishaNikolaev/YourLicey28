@@ -1,5 +1,8 @@
 package com.example.yourlicey28.presentation.home
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,6 +27,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Card
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Icon
@@ -105,6 +109,12 @@ val titleListDown = listOf(
 fun HomeScreen(navController: NavHostController) {
     val context = LocalContext.current
 
+    fun openUrl(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(url)
+        }
+        context.startActivity(intent)
+    }
     Column(
         modifier = Modifier
             .background(Color.White)
@@ -163,7 +173,7 @@ fun HomeScreen(navController: NavHostController) {
                 .fillMaxWidth(0.95f)
                 .height(100.dp)
                 .clickable {
-
+                    openUrl("https://lic28nsk.edusite.ru/")
                 },
             shape = RoundedCornerShape(20.dp),
             elevation = CardDefaults.cardElevation(4.dp),
@@ -231,7 +241,7 @@ fun HomeScreen(navController: NavHostController) {
                 .fillMaxWidth(0.95f)
                 .height(100.dp)
                 .clickable {
-
+                    openUrl("https://vk.com/club217483566")
                 },
             shape = RoundedCornerShape(20.dp),
             elevation = CardDefaults.cardElevation(4.dp),
@@ -362,12 +372,20 @@ fun ImagesItemDown(
     index: Int,
     navController: NavHostController
 ) {
+    val context = LocalContext.current
     val titleDown = titleListDown[index]
     val backgroundColor = when (titleDown.title) {
         "Приём в 1 класс" -> Color(0xFFC7F1C8)
         "Приём в 10 класс" -> Color(0xFFFDBAD1)
         "О лицее" -> Color(0xFFFFE8A5)
         else -> Color.White
+    }
+
+    fun openUrl(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(url)
+        }
+        context.startActivity(intent)
     }
 
     Card(
@@ -380,7 +398,7 @@ fun ImagesItemDown(
                 when (titleDown.title) {
                     "Приём в 1 класс" -> navController.navigate(WelcomeRoutes.EnterToFirstClass.route)
                     "Приём в 10 класс" -> navController.navigate(WelcomeRoutes.EnterToTenClass.route)
-                    "О лицее" -> navController.navigate(WelcomeRoutes.Photogallery.route)
+                    "О лицее" -> navController.navigate(WelcomeRoutes.AboutSchool.route)
                     else -> {}
                 }
             },
@@ -417,7 +435,12 @@ fun ImagesItemDown(
                 modifier = Modifier
                     .clip(RoundedCornerShape(20.dp))
                     .clickable {
-
+                        when (titleDown.title) {
+                            "Приём в 1 класс" -> openUrl("https://lic28nsk.edusite.ru/DswMedia/1klass-1.pdf")
+                            "Приём в 10 класс" -> openUrl("https://lic28nsk.edusite.ru/DswMedia/oborganizaciipriemav10kl.pdf")
+                            "О лицее" -> openUrl("https://lic28nsk.edusite.ru/p122aa1.html")
+                            else -> {}
+                        }
                     }
                     .height(40.dp)
                     .width(95.dp)
@@ -430,7 +453,6 @@ fun ImagesItemDown(
                     fontWeight = FontWeight.Normal,
                     color = Color.White,
                     fontFamily = roboto,
-                    //modifier = Modifier
                 )
             }
         }
