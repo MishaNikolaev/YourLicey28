@@ -25,7 +25,7 @@ import com.example.yourlicey28.presentation.news.NewsScreen
 import com.example.yourlicey28.presentation.home.HomeScreen
 import com.example.yourlicey28.presentation.home.components.popular.KruzhokScreen
 import com.example.yourlicey28.presentation.home.components.popular.teacher.MyTeachersScreen
-import com.example.yourlicey28.presentation.home.components.popular.TimeTableScreen
+import com.example.yourlicey28.presentation.home.components.popular.timetable_components.TimeTableScreen
 import com.example.yourlicey28.presentation.home.components.services.AboutSchool
 import com.example.yourlicey28.presentation.home.components.services.EnterToFirstClass
 import com.example.yourlicey28.presentation.home.components.services.EnterToTenClass
