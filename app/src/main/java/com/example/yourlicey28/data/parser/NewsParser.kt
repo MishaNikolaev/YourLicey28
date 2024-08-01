@@ -70,7 +70,8 @@ class NewParser @Inject constructor():Parser<News> {
                                 News(
                                     id = counter,
                                     text = listLinkTextData,
-                                    photo = photo
+                                    photo = photo,
+                                    favourite = false
                                 )
                             )
 
@@ -83,7 +84,8 @@ class NewParser @Inject constructor():Parser<News> {
                                             text = text
                                         )
                                     ),
-                                    photo = photo
+                                    photo = photo,
+                                    favourite = false
                                 )
                             )
                         }

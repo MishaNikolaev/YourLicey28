@@ -15,4 +15,9 @@ interface Repository {
 
     suspend fun readValue(key:String):String?
 
+    suspend fun addToDb(news:News)
+
+    suspend fun deleteFromDb(news:News)
+
+    suspend fun update(news:News)
 }

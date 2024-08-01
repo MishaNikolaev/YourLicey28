@@ -30,6 +30,7 @@ import com.example.yourlicey28.presentation.home.components.popular.timetable_co
 import com.example.yourlicey28.presentation.home.components.services.AboutSchool
 import com.example.yourlicey28.presentation.home.components.services.EnterToFirstClass
 import com.example.yourlicey28.presentation.home.components.services.EnterToTenClass
+import com.example.yourlicey28.presentation.news.NewsViewModel
 import com.example.yourlicey28.presentation.settings.SettingsScreen
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenFirst
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenSecond
@@ -39,6 +40,7 @@ import com.example.yourlicey28.ui.theme.GrayLC
 import com.example.yourlicey28.ui.theme.LightBlueLC
 
 private const val TAG = "NavGraph"
+
 sealed class WelcomeRoutes(val route: String) {
     object WelcomeScreenFirst : WelcomeRoutes("welcome_screen_first")
     object WelcomeScreenSecond : WelcomeRoutes("welcome_screen_second")
@@ -56,7 +58,10 @@ sealed class WelcomeRoutes(val route: String) {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun NavGraphWelcome(navController: NavHostController, viewModel: WelcomeViewModel = hiltViewModel()) {
+fun NavGraphWelcome(
+    navController: NavHostController,
+    viewModel: WelcomeViewModel = hiltViewModel()
+) {
     if (viewModel.state.finished) {
         NavHost(
             navController = navController,
@@ -82,7 +87,10 @@ fun NavGraphWelcome(navController: NavHostController, viewModel: WelcomeViewMode
                 Scaffold(
                     bottomBar = { BottomNavigationBar(rememberNavController()) }
                 ) { innerPadding ->
-                    NavigationGraph(navController = rememberNavController(), modifier = Modifier.padding(innerPadding))
+                    NavigationGraph(
+                        navController = rememberNavController(),
+                        modifier = Modifier.padding(innerPadding)
+                    )
                 }
             }
 
@@ -130,7 +138,10 @@ fun MainScreen() {
             Scaffold(
                 bottomBar = { BottomNavigationBar(navController) }
             ) { innerPadding ->
-                NavigationGraph(navController = navController, modifier = Modifier.padding(innerPadding))
+                NavigationGraph(
+                    navController = navController,
+                    modifier = Modifier.padding(innerPadding)
+                )
             }
         } else {
             NavGraphWelcome(navController = navController, viewModel = viewModel)
@@ -183,10 +194,16 @@ fun BottomNavigationBar(navController: NavHostController) {
     }
 }
 
-sealed class BottomNavItem(val route: String, val icon: Int, val activeIcon: Int, val title: String) {
+sealed class BottomNavItem(
+    val route: String,
+    val icon: Int,
+    val activeIcon: Int,
+    val title: String
+) {
     object Home : BottomNavItem("home", R.drawable.homeno, R.drawable.home_2, "Главная")
     object News : BottomNavItem("news", R.drawable.newsic_no, R.drawable.newsic, "Новости")
-    object Settings : BottomNavItem("settings", R.drawable.settings_no, R.drawable.settings, "Настройки")
+    object Settings :
+        BottomNavItem("settings", R.drawable.settings_no, R.drawable.settings, "Настройки")
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -201,7 +218,13 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modif
             HomeScreen(navController)
         }
         composable(BottomNavItem.News.route) {
-            NewsScreen()
+            val viewModel: NewsViewModel = hiltViewModel()
+            NewsScreen(
+                viewModel = viewModel,
+                onLikeClicked = { news ->
+                    viewModel.onLickeClicked(news = news)
+                }
+            )
         }
         composable(BottomNavItem.Settings.route) {
 //            val viewModel:HomeViewModel = hiltViewModel()

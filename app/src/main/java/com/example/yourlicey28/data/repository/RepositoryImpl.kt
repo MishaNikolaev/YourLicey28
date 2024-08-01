@@ -2,6 +2,8 @@ package com.example.yourlicey28.data.repository
 
 import com.example.yourlicey28.data.datastore.AppData
 import com.example.yourlicey28.data.local.AppDatabase
+import com.example.yourlicey28.data.local.entity.toNews
+import com.example.yourlicey28.data.local.entity.toNewsEntity
 import com.example.yourlicey28.data.parser.NewParser
 import com.example.yourlicey28.domain.model.News
 import com.example.yourlicey28.domain.repository.Repository
@@ -32,7 +34,17 @@ class RepositoryImpl @Inject constructor(
                     emit(Resource.Error("Проверьте подключение с интернетом"))
                     null
                 }
-            emit(Resource.Success(data = result))
+            val newsEntity = result?.map {
+                it.toNewsEntity()
+            }
+            newsEntity?.let { db.userDao().insertAll(news = it) }
+            val newsEntities = db.userDao().getAll()
+
+            val news = newsEntities.map {
+                it.toNews()
+            }
+
+            emit(Resource.Success(data = news))
             emit(Resource.Loading(false))
         }
     }
@@ -45,7 +57,19 @@ class RepositoryImpl @Inject constructor(
         return appDataStoreManager.readValue(key)
     }
 
-    suspend fun example(){
+    override suspend fun addToDb(news: News) {
+        db.userDao().insert(news = news.toNewsEntity())
+    }
+
+    override suspend fun deleteFromDb(news: News) {
+        db.userDao().delete(news = news.toNewsEntity())
+    }
+
+    override suspend fun update(news: News) {
+        db.userDao().update(news = news.toNewsEntity())
+    }
+
+    suspend fun example() {
 //        db.userDao()
     }
 

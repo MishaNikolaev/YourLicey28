@@ -46,7 +46,7 @@ import com.example.yourlicey28.ui.theme.LightGreenLC
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-fun NewsCard(news: News) {
+fun NewsCard(news: News, onLikeClicked: (news: News) -> Unit) {
     val uriHandler = LocalUriHandler.current
 
     Card(
@@ -95,9 +95,16 @@ fun NewsCard(news: News) {
                 horizontalArrangement = Arrangement.End
             ) {
 
-                IconButton(onClick = {
-
-                }) {
+                IconButton(
+                    onClick = {
+                        onLikeClicked.invoke(news)
+                    },
+                    modifier = Modifier.background(
+                        if (news.favourite) {
+                            Color.Red
+                        } else Color.White
+                    )
+                ) {
                     Icon(Icons.Default.FavoriteBorder, contentDescription = "like")
                 }
 
