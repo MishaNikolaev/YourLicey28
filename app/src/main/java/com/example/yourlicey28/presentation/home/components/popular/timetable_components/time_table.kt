@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.yourlicey28.R
+import com.example.yourlicey28.presentation.activityComponents.WelcomeRoutes
 import com.example.yourlicey28.ui.theme.BlueLC
 import com.example.yourlicey28.ui.theme.LightBlueLC
 import com.example.yourlicey28.ui.theme.monterrat
@@ -63,7 +64,7 @@ fun TimeTableScreen(navController: NavHostController){
         )
         Spacer(modifier = Modifier.height(24.dp))
         Button(onClick = {
-
+            navController.navigate(WelcomeRoutes.ChooseTimeTable.route)
         },
             colors = ButtonDefaults.buttonColors(containerColor = LightBlueLC),
             modifier = Modifier.height(45.dp).width(160.dp)) {

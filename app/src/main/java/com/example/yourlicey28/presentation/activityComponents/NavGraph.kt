@@ -25,6 +25,7 @@ import com.example.yourlicey28.presentation.news.NewsScreen
 import com.example.yourlicey28.presentation.home.HomeScreen
 import com.example.yourlicey28.presentation.home.components.popular.KruzhokScreen
 import com.example.yourlicey28.presentation.home.components.popular.teacher.MyTeachersScreen
+import com.example.yourlicey28.presentation.home.components.popular.timetable_components.ChooseTimeTable
 import com.example.yourlicey28.presentation.home.components.popular.timetable_components.TimeTableScreen
 import com.example.yourlicey28.presentation.home.components.services.AboutSchool
 import com.example.yourlicey28.presentation.home.components.services.EnterToFirstClass
@@ -50,6 +51,7 @@ sealed class WelcomeRoutes(val route: String) {
     object EnterToFirstClass : WelcomeRoutes("enter_to_first_class")
     object EnterToTenClass : WelcomeRoutes("enter_to_ten_class")
     object AboutSchool : WelcomeRoutes("about_school")
+    object ChooseTimeTable : WelcomeRoutes("choose_time_table")
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -109,6 +111,10 @@ fun NavGraphWelcome(navController: NavHostController, viewModel: WelcomeViewMode
 
             composable(WelcomeRoutes.HomeScreen.route) {
                 HomeScreen(navController)
+            }
+
+            composable(WelcomeRoutes.ChooseTimeTable.route) {
+                ChooseTimeTable(navController)
             }
         }
     }
@@ -225,6 +231,9 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modif
         }
         composable(WelcomeRoutes.HomeScreen.route) {
             HomeScreen(navController)
+        }
+        composable(WelcomeRoutes.ChooseTimeTable.route) {
+            ChooseTimeTable(navController)
         }
     }
 }
