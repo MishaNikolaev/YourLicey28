@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.yourlicey28.domain.model.News
 import com.example.yourlicey28.ui.theme.DarkLC
 import com.example.yourlicey28.ui.theme.LightBlueLC
 import com.example.yourlicey28.ui.theme.WhiteLC
@@ -45,8 +46,7 @@ import com.example.yourlicey28.ui.theme.roboto
 
 @ExperimentalFoundationApi
 @Composable
-fun NewsScreen(viewModel: NewsViewModel = hiltViewModel()
-) {
+fun NewsScreen(viewModel: NewsViewModel, onLikeClicked: (news: News) -> Unit) {
     var selectedTab by remember { mutableStateOf("Новости") }
 
     println(viewModel.state)
@@ -67,7 +67,10 @@ fun NewsScreen(viewModel: NewsViewModel = hiltViewModel()
                 contentPadding = PaddingValues(9.dp)
             ) {
                 items(viewModel.state.news.size) { index ->
-                    NewsCard(news = viewModel.state.news[index])
+                    NewsCard(news = viewModel.state.news[index],
+                        onLikeClicked = { it ->
+                            onLikeClicked.invoke(it)
+                        })
                 }
             }
         } else {
@@ -99,7 +102,10 @@ fun NewsScreen(viewModel: NewsViewModel = hiltViewModel()
 @Composable
 fun TabItem(selectedTab: String, tabName: String, onClicked: () -> Unit) {
     Box(
-        modifier = Modifier.height(45.dp).width(100.dp).clip(RoundedCornerShape(20.dp))
+        modifier = Modifier
+            .height(45.dp)
+            .width(100.dp)
+            .clip(RoundedCornerShape(20.dp))
             .background(
                 color = if (selectedTab == tabName) LightBlueLC else Color.Transparent,
                 shape = RoundedCornerShape(16.dp)
@@ -107,7 +113,7 @@ fun TabItem(selectedTab: String, tabName: String, onClicked: () -> Unit) {
             .clickable { onClicked() }
             .padding(12.dp),
         contentAlignment = Alignment.Center
-    ){
+    ) {
         Text(
             text = tabName,
             fontSize = 15.sp,
