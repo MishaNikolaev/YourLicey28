@@ -24,6 +24,7 @@ import androidx.navigation.NavHostController
 import com.example.yourlicey28.R
 import com.example.yourlicey28.domain.model.Teacher
 import com.example.yourlicey28.presentation.activityComponents.WelcomeRoutes
+import com.example.yourlicey28.ui.theme.LightBlueLC
 
 @Composable
 fun MyTeachersScreen(navController: NavHostController) {
@@ -428,7 +429,8 @@ fun MyTeachersScreen(navController: NavHostController) {
                 .size(50.dp)
                 .padding(start = 20.dp, top = 20.dp).clickable {
                     navController.navigate(WelcomeRoutes.HomeScreen.route)
-                }
+                },
+            tint = LightBlueLC
         )
         LazyColumn(
             modifier = Modifier.padding(top = 10.dp),
