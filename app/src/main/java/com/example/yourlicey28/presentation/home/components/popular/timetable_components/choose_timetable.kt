@@ -130,6 +130,11 @@ fun ClassCard(classInfo: ClassInfo, navController: NavController) {
                     "4 В" -> navController.navigate(WelcomeRoutes.ForthVClass.route)
                     "4 Г" -> navController.navigate(WelcomeRoutes.ForthGClass.route)
 
+                    "5 А" -> navController.navigate(WelcomeRoutes.FivethAClass.route)
+                    "5 Б" -> navController.navigate(WelcomeRoutes.FivethBClass.route)
+                    "5 В" -> navController.navigate(WelcomeRoutes.FivethVClass.route)
+                    "5 Г" -> navController.navigate(WelcomeRoutes.FivethGClass.route)
+
                     else -> {}
                 }
             },

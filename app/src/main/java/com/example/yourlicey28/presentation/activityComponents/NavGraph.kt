@@ -34,6 +34,10 @@ import com.example.yourlicey28.presentation.home.components.popular.timetable_co
 import com.example.yourlicey28.presentation.home.components.popular.timetable_components.time_table_classes.first.First_V_Class
 import com.example.yourlicey28.presentation.home.components.popular.timetable_components.time_table_classes.first.First_b_Class
 import com.example.yourlicey28.presentation.home.components.popular.timetable_components.time_table_classes.first.First_d_Class
+import com.example.yourlicey28.presentation.home.components.popular.timetable_components.time_table_classes.fiveth.Fiveth_A_Class
+import com.example.yourlicey28.presentation.home.components.popular.timetable_components.time_table_classes.fiveth.Fiveth_b_Class
+import com.example.yourlicey28.presentation.home.components.popular.timetable_components.time_table_classes.fiveth.Fiveth_g_Class
+import com.example.yourlicey28.presentation.home.components.popular.timetable_components.time_table_classes.fiveth.Fiveth_v_Class
 import com.example.yourlicey28.presentation.home.components.popular.timetable_components.time_table_classes.fourth.Fourth_A_Class
 import com.example.yourlicey28.presentation.home.components.popular.timetable_components.time_table_classes.fourth.Fourth_B_Class
 import com.example.yourlicey28.presentation.home.components.popular.timetable_components.time_table_classes.fourth.Fourth_G_Class
@@ -98,6 +102,13 @@ sealed class WelcomeRoutes(val route: String) {
     object ForthBClass : WelcomeRoutes("forth_b_class")
     object ForthVClass : WelcomeRoutes("forth_v_class")
     object ForthGClass : WelcomeRoutes("forth_g_class")
+
+
+    //Fiveth classes time table
+    object FivethAClass : WelcomeRoutes("fiveth_a_class")
+    object FivethBClass : WelcomeRoutes("fiveth_b_class")
+    object FivethVClass : WelcomeRoutes("fiveth_v_class")
+    object FivethGClass : WelcomeRoutes("fiveth_g_class")
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -227,6 +238,20 @@ fun NavGraphWelcome(
             }
             composable(WelcomeRoutes.ForthGClass.route) {
                 Fourth_G_Class(navController = navController)
+            }
+
+            //Fiveth classes time table
+            composable(WelcomeRoutes.FivethAClass.route) {
+                Fiveth_A_Class(navController = navController)
+            }
+            composable(WelcomeRoutes.FivethBClass.route) {
+                Fiveth_b_Class(navController = navController)
+            }
+            composable(WelcomeRoutes.FivethVClass.route) {
+                Fiveth_v_Class(navController = navController)
+            }
+            composable(WelcomeRoutes.FivethGClass.route) {
+                Fiveth_g_Class(navController = navController)
             }
         }
     }
@@ -421,6 +446,20 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modif
         }
         composable(WelcomeRoutes.ForthGClass.route) {
             Fourth_G_Class(navController = navController)
+        }
+
+        //Fiveth classes time table
+        composable(WelcomeRoutes.FivethAClass.route) {
+            Fiveth_A_Class(navController = navController)
+        }
+        composable(WelcomeRoutes.FivethBClass.route) {
+            Fiveth_b_Class(navController = navController)
+        }
+        composable(WelcomeRoutes.FivethVClass.route) {
+            Fiveth_v_Class(navController = navController)
+        }
+        composable(WelcomeRoutes.FivethGClass.route) {
+            Fiveth_g_Class(navController = navController)
         }
     }
 }
