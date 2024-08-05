@@ -6,6 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +31,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowForwardIos
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Notifications
@@ -38,6 +40,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Checkbox
@@ -67,6 +70,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -78,12 +82,16 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.yourlicey28.R
+import com.example.yourlicey28.ui.theme.BlueLC
 import com.example.yourlicey28.ui.theme.DarkBlueLC
 import com.example.yourlicey28.ui.theme.DarkLC
+import com.example.yourlicey28.ui.theme.GrayLC
 import com.example.yourlicey28.ui.theme.LightBlueLC
+import com.example.yourlicey28.ui.theme.LightGreenLC
 import com.example.yourlicey28.ui.theme.RedLC
 import com.example.yourlicey28.ui.theme.WhiteLC
 import com.example.yourlicey28.ui.theme.monterrat
@@ -93,11 +101,16 @@ import kotlinx.coroutines.launch
 @Composable
 fun SettingsScreen(navController: NavController) {
     val context = LocalContext.current
-    var showDialog by remember { mutableStateOf(false) }
+    var showDialogTheme by remember { mutableStateOf(false) }
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
+    var selectedTheme by remember { mutableStateOf("Светлая") }
+
+    val backgroundColor = if (selectedTheme == "Тёмная") DarkLC else Color.White
+    val textColor = if (selectedTheme == "Тёмная") Color.White else DarkLC
+
     Column(
         modifier = Modifier
-            .background(Color.White)
+            .background(backgroundColor)
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
@@ -106,19 +119,22 @@ fun SettingsScreen(navController: NavController) {
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold,
             fontFamily = monterrat,
-            color = Color.DarkGray,
+            color = textColor,
             modifier = Modifier.padding(start = 20.dp, top = 20.dp)
         )
 
-        Box(modifier = Modifier
-            .padding(top = 30.dp, start = 20.dp)
-            .clip(RoundedCornerShape(20.dp))
-            .background(Color(0xFFFAFAFA))
-            .fillMaxWidth(0.95f)
-            .height(60.dp)
-            .clickable {
-
-            }) {
+        Card(
+            modifier = Modifier
+                .padding(top = 30.dp, start = 20.dp)
+                .fillMaxWidth(0.95f)
+                .height(60.dp)
+                .clickable {
+                    showDialogTheme = true
+                },
+            shape = RoundedCornerShape(20.dp),
+            colors = CardDefaults.cardColors(backgroundColor),
+            elevation = CardDefaults.cardElevation(8.dp)
+        ) {
             Row {
                 Icon(
                     imageVector = Icons.Default.Palette,
@@ -151,6 +167,24 @@ fun SettingsScreen(navController: NavController) {
             }
         }
 
+        if (showDialogTheme) {
+            AlertDialog(
+                onDismissRequest = { showDialogTheme = false },
+                title = {
+                    Text(text = "Выбор темы", color = textColor, fontFamily = roboto)
+                },
+                text = {
+                    ThemeSelectionBox { theme ->
+                        selectedTheme = theme
+                        showDialogTheme = false
+                    }
+                },
+                confirmButton = {},
+                dismissButton = {},
+                containerColor = backgroundColor
+            )
+        }
+
         Row(
             modifier = Modifier
                 .padding(16.dp)
@@ -162,7 +196,7 @@ fun SettingsScreen(navController: NavController) {
                 fontSize = 25.sp,
                 fontFamily = monterrat,
                 fontWeight = FontWeight.Bold,
-                color = Color.DarkGray,
+                color = textColor,
                 modifier = Modifier
                     .padding(start = 20.dp, end = 10.dp)
                     .align(Alignment.CenterVertically)
@@ -191,7 +225,7 @@ fun SettingsScreen(navController: NavController) {
             text = "Это приложение является Open Source продуктом. С удовольствием буду ждать Ваших предложений и сообщений. Буду рад любой помощи/участию в проекте!",
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
-            color = Color.DarkGray,
+            color = textColor,
             modifier = Modifier.padding(start = 20.dp, end = 10.dp)
         )
         Spacer(modifier = Modifier.height(20.dp))
@@ -203,13 +237,13 @@ fun SettingsScreen(navController: NavController) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                painter = painterResource(id = R.drawable.github),
+                painter = painterResource(id = R.drawable._01473670_e0e6bdeb_742f_4be1_a47a_3506309620a3),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .padding(start = 20.dp)
                     .height(59.dp)
-                    .width(57.dp)
+                    .width(57.dp).clip(RoundedCornerShape(20.dp))
                     .clickable {
                         val intent = Intent(
                             Intent.ACTION_VIEW,
@@ -241,7 +275,7 @@ fun SettingsScreen(navController: NavController) {
             fontSize = 20.sp,
             fontFamily = monterrat,
             fontWeight = FontWeight.Bold,
-            color = Color.DarkGray,
+            color = textColor,
             modifier = Modifier.padding(start = 20.dp)
         )
 
@@ -253,7 +287,11 @@ fun SettingsScreen(navController: NavController) {
                 .clip(RoundedCornerShape(20.dp))
                 .fillMaxWidth(0.95f)
                 .height(64.dp)
-                .background(RedLC)
+                .background(
+                    brush = Brush.linearGradient(
+                        colors = listOf(Color(0xFFFF4786), Color(0xFF191A1F))
+                    )
+                )
                 .clickable {
                     openBottomSheet = true
                 },
@@ -274,6 +312,9 @@ fun SettingsScreen(navController: NavController) {
 
 @Composable
 fun ProjectMembersList(members: List<ProjectMember>) {
+    var selectedTheme by remember { mutableStateOf("Светлая") }
+    val backgroundColor = if (selectedTheme == "Тёмная") DarkLC else Color.White
+    val textColor = if (selectedTheme == "Тёмная") Color.White else DarkLC
     LazyRow(
         modifier = Modifier.padding(16.dp)
     ) {
@@ -285,21 +326,26 @@ fun ProjectMembersList(members: List<ProjectMember>) {
 
 @Composable
 fun MemberCard(member: ProjectMember) {
+    val selectedTheme by remember { mutableStateOf("Светлая") }
+
+    val backgroundColor = if (selectedTheme == "Тёмная") DarkLC else Color.White
+    val textColor = if (selectedTheme == "Тёмная") Color.White else DarkLC
     val context = LocalContext.current
-    Card(
+
+    Box(
         modifier = Modifier
             .padding(8.dp)
+            .clip(RoundedCornerShape(20.dp))
             .fillMaxWidth()
-            .clickable {
+            .background(
+            brush = Brush.linearGradient(
+                colors = listOf(Color(0xFFFFFFFF), Color(0xFF0065FF))
+            )
+        ).clickable {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(member.clickUrl))
                 context.startActivity(intent)
-            },
-        elevation = CardDefaults.cardElevation(6.dp),
-        shape = RoundedCornerShape(10.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        )
-    ) {
+            }
+    ){
         Row(
             modifier = Modifier
                 .padding(16.dp)
@@ -318,12 +364,12 @@ fun MemberCard(member: ProjectMember) {
             Column(
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(member.name, fontWeight = FontWeight.Bold, fontSize = 18.sp)
-                Text("${member.commitCount} коммита", fontSize = 14.sp)
+                Text(member.name,  color = textColor, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Text("${member.commitCount} коммита",  color = textColor, fontSize = 14.sp)
             }
         }
     }
-}
+    }
 
 data class ProjectMember(
     val imageUrl: String,
@@ -340,115 +386,3 @@ val members = listOf(
         "https://github.com/MishaNikolaev"
     ),
 )
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun FeedbackFormBottomSheet(openBottomSheet: Boolean, onDismiss: () -> Unit) {
-    var skipPartiallyExpanded by rememberSaveable { mutableStateOf(false) }
-    val scope = rememberCoroutineScope()
-    val bottomSheetState =
-        rememberModalBottomSheetState(skipPartiallyExpanded = skipPartiallyExpanded)
-
-    if (openBottomSheet) {
-        ModalBottomSheet(
-            onDismissRequest = { onDismiss() },
-            sheetState = bottomSheetState,
-            containerColor = Color.White
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .background(Color.White)
-            ) {
-
-                Text(
-                    text = "Оставить отзыв",
-                    fontFamily = roboto,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Text(
-                    text = "Кажется, у вас что-то пошло не так. Пожалуйста, напишите нам, и мы постараемся исправить это. Мы свяжемся по указанному email адресу для уточнения деталей.",
-                    fontSize = 14.sp,
-                    fontFamily = roboto,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Text(
-                    text = "Email",
-                    fontFamily = roboto,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.padding(start = 8.dp)
-                )
-                Spacer(modifier = Modifier.height(6.dp))
-
-                var email by remember { mutableStateOf(TextFieldValue()) }
-                OutlinedTextField(
-                    value = email,
-                    onValueChange = { email = it },
-                    placeholder = { Text("Введите email") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
-                )
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Text(
-                    text = "Что случилось?",
-                    fontFamily = roboto,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.padding(start = 8.dp)
-                )
-                Spacer(modifier = Modifier.height(6.dp))
-
-                var description by remember { mutableStateOf(TextFieldValue()) }
-                OutlinedTextField(
-                    value = description,
-                    onValueChange = { description = it },
-                    placeholder = { Text("Когда я нажимаю \"X\" происходит \"Y\"") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(100.dp)
-                        .padding(horizontal = 8.dp)
-                )
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Box(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .clip(RoundedCornerShape(20.dp))
-                        .fillMaxWidth(0.95f)
-                        .height(44.dp)
-                        .background(LightBlueLC)
-                        .clickable {
-
-                        },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Отправить",
-                        fontSize = 14.sp,
-                        fontFamily = roboto,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-                Spacer(modifier = Modifier.height(70.dp))
-            }
-        }
-    }
-}

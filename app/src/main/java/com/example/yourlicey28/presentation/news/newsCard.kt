@@ -29,6 +29,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,12 +46,17 @@ import androidx.compose.ui.unit.sp
 import com.example.yourlicey28.data.parser.LinkText
 import com.example.yourlicey28.domain.model.LinkTextData
 import com.example.yourlicey28.domain.model.News
+import com.example.yourlicey28.ui.theme.DarkLC
 import com.example.yourlicey28.ui.theme.LightGreenLC
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun NewsCard(news: News, onLikeClicked: (news: News) -> Unit) {
     val uriHandler = LocalUriHandler.current
+    var selectedTheme by remember { mutableStateOf("Светлая") }
+
+    val backgroundColor = if (selectedTheme == "Тёмная") DarkLC else Color.White
+    val textColor = if (selectedTheme == "Тёмная") Color.White else DarkLC
 
     Card(
         modifier = Modifier
@@ -58,7 +67,7 @@ fun NewsCard(news: News, onLikeClicked: (news: News) -> Unit) {
             },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = backgroundColor
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp
@@ -68,7 +77,7 @@ fun NewsCard(news: News, onLikeClicked: (news: News) -> Unit) {
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(16.dp))
-                .background(Color.White)
+                .background(backgroundColor)
         ) {
             GlideImage(
                 imageModel = news.photo,

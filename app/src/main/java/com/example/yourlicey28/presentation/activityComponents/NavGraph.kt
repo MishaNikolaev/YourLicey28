@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.NavigationBar
@@ -12,6 +13,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -59,10 +63,12 @@ import com.example.yourlicey28.presentation.welcome.WelcomeScreenFirst
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenSecond
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenThird
 import com.example.yourlicey28.presentation.welcome.WelcomeViewModel
+import com.example.yourlicey28.ui.theme.DarkLC
 import com.example.yourlicey28.ui.theme.GrayLC
 import com.example.yourlicey28.ui.theme.LightBlueLC
 
 private const val TAG = "NavGraph"
+
 
 sealed class WelcomeRoutes(val route: String) {
     object WelcomeScreenFirst : WelcomeRoutes("welcome_screen_first")
