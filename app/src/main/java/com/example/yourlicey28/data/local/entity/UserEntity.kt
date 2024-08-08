@@ -5,12 +5,12 @@ import androidx.room.PrimaryKey
 import com.example.yourlicey28.domain.model.LinkTextData
 import com.example.yourlicey28.domain.model.News
 
-@Entity
-data class UserEntity(
-    @PrimaryKey(autoGenerate = false)
-    val id: Int,
-    val name: String
-)
+//@Entity
+//data class UserEntity(
+//    @PrimaryKey(autoGenerate = false)
+//    val id: Int,
+//    val name: String
+//)
 
 @Entity
 data class NewsEntity(
@@ -21,10 +21,15 @@ data class NewsEntity(
     val favourite:Boolean
 )
 
-data class LinkTextData(
+
+@Entity
+data class LinkTextDataEntity(
+    @PrimaryKey(autoGenerate = false)
+    val id:Int,
     val text: String,
     val tag: String? = null,
-    val annotation: String? = null
+    val annotation: String? = null,
+    val newsId: Int
 )
 
 fun News.toNewsEntity(): NewsEntity {
@@ -42,5 +47,25 @@ fun NewsEntity.toNews():News {
         text = listOf(),
         photo = photo,
         favourite = favourite
+    )
+}
+
+fun LinkTextData.toEntity():LinkTextDataEntity{
+    return LinkTextDataEntity(
+        id = id,
+        text = text,
+        tag = tag,
+        annotation =  annotation,
+        newsId =  newsId
+    )
+}
+
+fun LinkTextDataEntity.toObject():LinkTextData{
+    return LinkTextData(
+        id = id,
+        text = text,
+        tag = tag,
+        annotation =  annotation,
+        newsId =  newsId
     )
 }

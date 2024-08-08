@@ -55,6 +55,10 @@ class NewsViewModel @Inject constructor(
         viewModelScope.launch {
             Log.d(TAG, "onLickeClicked: ${news}")
             repository.update(news = news.copy(favourite = !news.favourite))
+            val index = state.news.indexOf(news)
+            val arrayList:ArrayList<News> = ArrayList(state.news)
+            arrayList.set(index,news.copy(favourite = !news.favourite))
+            state = state.copy(news = arrayList.toList())
         }
     }
 }
