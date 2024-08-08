@@ -40,6 +40,7 @@ class NewParser @Inject constructor():Parser<News> {
             val trs = tbody?.children()
 
             var counter = 1
+            var counter_text_data = 1
 
             for (i in 1 until trs!!.size) {
                 try {
@@ -54,17 +55,24 @@ class NewParser @Inject constructor():Parser<News> {
                         if (pair.first != -1 && pair.second != -1) {
                             val listLinkTextData = listOf(
                                 LinkTextData(
-                                    text = text.substring(0, pair.first)
+                                    id = counter_text_data,
+                                    text = text.substring(0, pair.first),
+                                    newsId = counter
                                 ),
                                 LinkTextData(
+                                    id = counter_text_data + 1,
                                     text = text.substring(pair.first, pair.second),
                                     tag = text.substring(pair.first, pair.second),
-                                    annotation = text.substring(pair.first, pair.second)
+                                    annotation = text.substring(pair.first, pair.second),
+                                    newsId = counter
                                 ),
                                 LinkTextData(
+                                    id = counter_text_data + 2,
                                     text = text.substring(pair.second + 1, text.length),
+                                    newsId = counter
                                 )
                             )
+                            counter_text_data += 3
 
                             news.add(
                                 News(
@@ -81,6 +89,8 @@ class NewParser @Inject constructor():Parser<News> {
                                     id = counter,
                                     text = listOf(
                                         LinkTextData(
+                                            id = counter_text_data,
+                                            newsId = counter,
                                             text = text
                                         )
                                     ),
@@ -88,6 +98,7 @@ class NewParser @Inject constructor():Parser<News> {
                                     favourite = false
                                 )
                             )
+                            counter_text_data += 1
                         }
                     }
                 } catch (ex: Exception) {

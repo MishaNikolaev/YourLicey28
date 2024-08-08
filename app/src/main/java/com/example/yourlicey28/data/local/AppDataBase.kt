@@ -2,12 +2,19 @@ package com.example.yourlicey28.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.yourlicey28.data.local.dao.UserDao
+import com.example.yourlicey28.data.local.dao.LinkTextDataDao
+import com.example.yourlicey28.data.local.dao.NewsDao
+import com.example.yourlicey28.data.local.entity.LinkTextDataEntity
 import com.example.yourlicey28.data.local.entity.NewsEntity
-import com.example.yourlicey28.data.local.entity.UserEntity
 
 
-@Database(entities = [UserEntity::class,NewsEntity::class], version = 1)
+@Database(
+    entities = [
+        NewsEntity::class,
+        LinkTextDataEntity::class
+    ], version = 1
+)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun userDao(): UserDao
+    abstract fun newsDao(): NewsDao
+    abstract fun linkTextDataDao(): LinkTextDataDao
 }
