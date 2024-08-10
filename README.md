@@ -1,4 +1,4 @@
-![logs](https://github.com/MishaNikolaev/YourLicey28/blob/develop/LiceyImg.jpg)
+
 
 **В разработке с 19.7.2024. Релиз планирую на октябрь 2024**
 
