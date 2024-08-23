@@ -422,16 +422,6 @@ fun MyTeachersScreen(navController: NavHostController) {
 
     Column(
     ) {
-        Icon(
-            imageVector = Icons.Default.ArrowBack,
-            contentDescription = "Back",
-            modifier = Modifier
-                .size(50.dp)
-                .padding(start = 20.dp, top = 20.dp).clickable {
-                    navController.navigate(WelcomeRoutes.HomeScreen.route)
-                },
-            tint = LightBlueLC
-        )
         LazyColumn(
             modifier = Modifier.padding(top = 10.dp),
             contentPadding = PaddingValues(9.dp)

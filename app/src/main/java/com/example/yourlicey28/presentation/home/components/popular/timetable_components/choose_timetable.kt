@@ -115,7 +115,7 @@ fun ClassCard(classInfo: ClassInfo, navController: NavController) {
                     "1 Г" -> navController.navigate(WelcomeRoutes.FirstGClass.route)
                     "1 Д" -> navController.navigate(WelcomeRoutes.FirstGClass.route)
 
-                    "2 А" -> navController.navigate(WelcomeRoutes.SecondAClass.route)
+                    /*"2 А" -> navController.navigate(WelcomeRoutes.SecondAClass.route)
                     "2 Б" -> navController.navigate(WelcomeRoutes.SecondBClass.route)
                     "2 В" -> navController.navigate(WelcomeRoutes.SecondVClass.route)
                     "2 Г" -> navController.navigate(WelcomeRoutes.SecondtGClass.route)
@@ -134,7 +134,7 @@ fun ClassCard(classInfo: ClassInfo, navController: NavController) {
                     "5 Б" -> navController.navigate(WelcomeRoutes.FivethBClass.route)
                     "5 В" -> navController.navigate(WelcomeRoutes.FivethVClass.route)
                     "5 Г" -> navController.navigate(WelcomeRoutes.FivethGClass.route)
-
+                       */
                     else -> {}
                 }
             },
