@@ -19,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Comment
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
@@ -61,8 +62,7 @@ fun NewsCard(news: News, onLikeClicked: (news: News) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(6.dp)
-            .clickable {
+            .padding(6.dp).clickable {
 
             },
         shape = RoundedCornerShape(16.dp),
@@ -103,18 +103,16 @@ fun NewsCard(news: News, onLikeClicked: (news: News) -> Unit) {
                     .padding(4.dp),
                 horizontalArrangement = Arrangement.End
             ) {
-
                 IconButton(
                     onClick = {
                         onLikeClicked.invoke(news)
-                    },
-                    modifier = Modifier.background(
-                        if (news.favourite) {
-                            Color.Red
-                        } else Color.White
-                    )
+                    }
                 ) {
-                    Icon(Icons.Default.FavoriteBorder, contentDescription = "like")
+                    Icon(
+                        imageVector = if (news.favourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = "like",
+                        tint = if (news.favourite) Color.Red else Color.Black
+                    )
                 }
 
                 IconButton(onClick = {
@@ -126,6 +124,7 @@ fun NewsCard(news: News, onLikeClicked: (news: News) -> Unit) {
         }
     }
 }
+
 
 
 fun getShortenedTextData(textData: List<LinkTextData>, maxLength: Int): List<LinkTextData> {
