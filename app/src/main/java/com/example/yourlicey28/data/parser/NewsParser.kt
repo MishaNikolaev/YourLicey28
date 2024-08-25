@@ -79,7 +79,8 @@ class NewParser @Inject constructor():Parser<News> {
                                     id = counter,
                                     text = listLinkTextData,
                                     photo = photo,
-                                    favourite = false
+                                    favourite = false,
+                                    important = false
                                 )
                             )
 
@@ -95,7 +96,8 @@ class NewParser @Inject constructor():Parser<News> {
                                         )
                                     ),
                                     photo = photo,
-                                    favourite = false
+                                    favourite = false,
+                                    important = false
                                 )
                             )
                             counter_text_data += 1

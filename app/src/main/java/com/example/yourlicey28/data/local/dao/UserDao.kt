@@ -36,6 +36,8 @@ interface NewsDao {
     @Query("UPDATE newsentity SET favourite = :favourite WHERE id = :id")
     suspend fun update_favourite(favourite:Boolean,id:Int)
 
+    @Query("UPDATE newsentity SET important = :important WHERE id = :id")
+    suspend fun update_important(important:Boolean,id:Int)
 }
 
 @Dao

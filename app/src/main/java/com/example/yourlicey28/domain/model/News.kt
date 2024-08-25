@@ -4,5 +4,6 @@ data class News(
     val id: Int,
     val text: List<LinkTextData>,
     val photo: String,
-    val favourite: Boolean
+    val favourite: Boolean,
+    val important: Boolean
 )
