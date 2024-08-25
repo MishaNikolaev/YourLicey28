@@ -67,6 +67,17 @@ fun CalendarComponent(
     val daysInGrid = if (startOfWeek.dayOfMonth + 35 < daysInMonth) 42 else 35
     val dates = List(daysInGrid) { startOfWeek.plusDays(it.toLong()) }
 
+    // Находим индекс недели, содержащей сегодняшнюю дату
+    val weekContainingTodayIndex = dates.chunked(7).indexOfFirst { week ->
+        week.any { date -> date == today }
+    }
+
+    val dateChunks = if (weekContainingTodayIndex != -1) {
+        dates.chunked(7).drop(weekContainingTodayIndex)
+    } else {
+        dates.chunked(7)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -120,8 +131,7 @@ fun CalendarComponent(
         Spacer(modifier = Modifier.height(4.dp))
 
         Column(modifier = Modifier.fillMaxWidth()) {
-            val chunks = dates.chunked(7)
-            chunks.firstOrNull()?.let { week ->
+            dateChunks.firstOrNull()?.let { week ->
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                     week.forEach { date ->
                         val isSelected = date == selectedDate
@@ -151,7 +161,7 @@ fun CalendarComponent(
                 }
             }
             if (isExpanded) {
-                val remainingWeeks = chunks.drop(1)
+                val remainingWeeks = dateChunks.drop(1)
                 remainingWeeks.forEach { week ->
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
                         week.forEach { date ->
