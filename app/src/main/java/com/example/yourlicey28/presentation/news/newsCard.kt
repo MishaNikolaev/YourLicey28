@@ -52,7 +52,8 @@ import com.example.yourlicey28.ui.theme.LightGreenLC
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-fun NewsCard(news: News, onLikeClicked: (news: News) -> Unit) {
+fun NewsCard(news: News, onLikeClicked: (news: News) -> Unit,
+             onImportantClicked: (news: News) -> Unit) {
     val uriHandler = LocalUriHandler.current
     var selectedTheme by remember { mutableStateOf("Светлая") }
 
@@ -115,10 +116,16 @@ fun NewsCard(news: News, onLikeClicked: (news: News) -> Unit) {
                     )
                 }
 
-                IconButton(onClick = {
-
-                }) {
-                    Icon(Icons.Default.BookmarkBorder, contentDescription = "important")
+                IconButton(
+                    onClick = {
+                        onImportantClicked.invoke(news)
+                    }
+                ) {
+                    Icon(
+                        imageVector = if (news.important) Icons.Default.Bookmark else Icons.Default.BookmarkBorder,
+                        contentDescription = "Important",
+                        tint = if (news.important) Color.Blue else Color.Black
+                    )
                 }
             }
         }

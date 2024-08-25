@@ -61,4 +61,14 @@ class NewsViewModel @Inject constructor(
             state = state.copy(news = arrayList.toList())
         }
     }
+    fun onImportantClicked(news: News) {
+        viewModelScope.launch {
+            Log.d(TAG, "onImportantClicked: ${news}")
+            repository.update(news = news.copy(important = !news.important))
+            val index = state.news.indexOf(news)
+            val arrayList:ArrayList<News> = ArrayList(state.news)
+            arrayList.set(index,news.copy(important = !news.important))
+            state = state.copy(news = arrayList.toList())
+        }
+    }
 }

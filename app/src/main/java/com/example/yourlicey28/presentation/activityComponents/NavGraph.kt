@@ -354,6 +354,9 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modif
                 viewModel = viewModel,
                 onLikeClicked = { news ->
                     viewModel.onLickeClicked(news = news)
+                },
+                onImportantClicked = { news ->
+                    viewModel.onImportantClicked(news = news)
                 }
             )
         }

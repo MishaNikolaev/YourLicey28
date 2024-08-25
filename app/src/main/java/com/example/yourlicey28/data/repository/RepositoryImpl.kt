@@ -38,11 +38,6 @@ class RepositoryImpl @Inject constructor(
                     emit(Resource.Error("Проверьте подключение с интернетом"))
                     null
                 }
-
-//            val newsEntity = result?.map {
-//                it.toNewsEntity()
-//            }
-
             val newsEntity: ArrayList<NewsEntity> = arrayListOf()
             val listLinkTextDataEntity: ArrayList<LinkTextDataEntity> = arrayListOf()
 
@@ -56,19 +51,9 @@ class RepositoryImpl @Inject constructor(
                 }
             }
 
-//            newsEntity?.let { db.newsDao().insertAll(it) }
             db.newsDao().insertAll(newsEntity)
             db.linkTextDataDao().insertAll(listLinkTextDataEntity)
 
-//            newsEntity?.let { it->
-//                db.newsDao().insertAll(news = it)
-//                db.linkTextDataDao().insertAll(linkTextData = it.li)
-//            }
-//            newsEntity?.forEach { it ->
-//                db.newsDao().insert(news = it)
-//                db.linkTextDataDao().insert(linkTextData = it.)
-//            }
-//
             val newsEntities = db.newsDao().getAll()
 
             val newsList: ArrayList<News> = arrayListOf()
@@ -80,7 +65,8 @@ class RepositoryImpl @Inject constructor(
                         it_1.toObject()
                     },
                     photo = it.photo,
-                    favourite = it.favourite
+                    favourite = it.favourite,
+                    important = it.important
                 )
                 newsList.add(new)
             }
@@ -110,14 +96,7 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun update(news: News) {
         db.newsDao().update_favourite(favourite = news.favourite,id = news.id)
-//        val newsEntities = db.newsDao().getAll()
-//        return newsEntities.map {
-//            it.toNews()
-//        }
-    }
-
-    suspend fun example() {
-//        db.userDao()
+        db.newsDao().update_important(important = news.important,id = news.id)
     }
 
 }

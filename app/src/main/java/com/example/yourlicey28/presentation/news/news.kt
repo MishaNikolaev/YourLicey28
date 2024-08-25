@@ -46,7 +46,8 @@ import com.example.yourlicey28.ui.theme.roboto
 
 @ExperimentalFoundationApi
 @Composable
-fun NewsScreen(viewModel: NewsViewModel, onLikeClicked: (news: News) -> Unit) {
+fun NewsScreen(viewModel: NewsViewModel, onLikeClicked: (news: News) -> Unit,
+               onImportantClicked: (news: News) -> Unit) {
     var selectedTab by remember { mutableStateOf("Новости") }
 
     println(viewModel.state)
@@ -70,6 +71,9 @@ fun NewsScreen(viewModel: NewsViewModel, onLikeClicked: (news: News) -> Unit) {
                     NewsCard(news = viewModel.state.news[index],
                         onLikeClicked = { it ->
                             onLikeClicked.invoke(it)
+                        },
+                        onImportantClicked = { it ->
+                            onImportantClicked.invoke(it)
                         })
                 }
             }
