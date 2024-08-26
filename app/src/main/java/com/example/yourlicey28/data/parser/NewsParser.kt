@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import com.example.yourlicey28.domain.model.LinkTextData
 import com.example.yourlicey28.domain.model.News
 import com.example.yourlicey28.ui.theme.DarkBlueLC
+import com.example.yourlicey28.ui.theme.DarkLC
 import com.example.yourlicey28.ui.theme.monterrat
 import com.example.yourlicey28.ui.theme.roboto
 import kotlinx.coroutines.Dispatchers
@@ -137,9 +138,14 @@ private fun getHyperLinks(text: String): Pair<Int, Int> {
 fun LinkText(
     linkTextData: List<LinkTextData>,
     modifier: Modifier = Modifier,
-    onClick: ((str: String) -> Unit)? = null
+    onClick: ((str: String) -> Unit)? = null,
+    isDarkThemeEnabled: Boolean,
+    textColor: Color
+
 ) {
-    val annotatedString = createAnnotatedString(linkTextData)
+    val textColor = if (isDarkThemeEnabled) Color.White else DarkLC
+    val annotatedString = createAnnotatedString(linkTextData,
+        isDarkThemeEnabled)
     ClickableText(
         text = annotatedString,
         onClick = { offset ->
@@ -160,7 +166,9 @@ fun LinkText(
 }
 
 @Composable
-private fun createAnnotatedString(data: List<LinkTextData>): AnnotatedString {
+private fun createAnnotatedString(data: List<LinkTextData>,
+                                  isDarkThemeEnabled : Boolean  ): AnnotatedString {
+    val textColor = if (isDarkThemeEnabled) Color.White else DarkLC
     return buildAnnotatedString {
         data.forEach { linkTextData ->
             if (linkTextData.tag != null && linkTextData.annotation != null) {
@@ -181,9 +189,9 @@ private fun createAnnotatedString(data: List<LinkTextData>): AnnotatedString {
             } else {
                 withStyle(
                     style = SpanStyle(
-                        color = Color.Black,
+                        color = textColor,
                         fontFamily = roboto,
-                        fontSize = 14.sp,
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.Normal
                     ),
                 ) {

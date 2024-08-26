@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -158,42 +159,20 @@ fun FeedbackFormBottomSheet(openBottomSheet: Boolean, onDismiss: () -> Unit) {
 }
 @Composable
 fun ThemeSelectionBox(onThemeSelected: (String) -> Unit) {
-
-    Column(modifier = Modifier.padding(16.dp)) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-
-                }
-                .padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Светлая",
-                color = Color.Black,
+    val themes = listOf("Светлая", "Тёмная")
+    Column {
+        themes.forEach { theme ->
+            Box(
                 modifier = Modifier
-                    .weight(1f)
-                    .padding(end = 8.dp)
-            )
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-
-                }
-                .padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Тёмная",
-                color = Color.Black,
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(end = 8.dp)
-            )
+                    .fillMaxWidth()
+                    .padding(8.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .clickable { onThemeSelected(theme) }
+                    .background(MaterialTheme.colorScheme.surface)
+                    .padding(16.dp)
+            ) {
+                Text(text = theme, color = MaterialTheme.colorScheme.onSurface)
+            }
         }
     }
 }

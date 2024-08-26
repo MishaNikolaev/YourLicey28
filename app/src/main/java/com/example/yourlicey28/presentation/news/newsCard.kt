@@ -1,5 +1,6 @@
 package com.example.yourlicey28.presentation.news
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -44,28 +45,33 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberImagePainter
 import com.example.yourlicey28.data.parser.LinkText
 import com.example.yourlicey28.domain.model.LinkTextData
 import com.example.yourlicey28.domain.model.News
+import com.example.yourlicey28.ui.theme.BlueLC
+import com.example.yourlicey28.ui.theme.BlueSecondLC
+import com.example.yourlicey28.ui.theme.DarkBlueLC
 import com.example.yourlicey28.ui.theme.DarkLC
 import com.example.yourlicey28.ui.theme.LightGreenLC
 import com.skydoves.landscapist.glide.GlideImage
-
 @Composable
-fun NewsCard(news: News, onLikeClicked: (news: News) -> Unit,
-             onImportantClicked: (news: News) -> Unit) {
+fun NewsCard(
+    news: News,
+    onLikeClicked: (news: News) -> Unit,
+    onImportantClicked: (news: News) -> Unit,
+    isDarkThemeEnabled: Boolean
+) {
     val uriHandler = LocalUriHandler.current
-    var selectedTheme by remember { mutableStateOf("Светлая") }
 
-    val backgroundColor = if (selectedTheme == "Тёмная") DarkLC else Color.White
-    val textColor = if (selectedTheme == "Тёмная") Color.White else DarkLC
+    val backgroundColor = if (isDarkThemeEnabled) BlueSecondLC else Color.White
+    val textColor = if (isDarkThemeEnabled) Color.White else Color.White
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(6.dp).clickable {
-
-            },
+            .padding(6.dp)
+            .clickable { },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = backgroundColor
@@ -94,10 +100,11 @@ fun NewsCard(news: News, onLikeClicked: (news: News) -> Unit,
             LinkText(
                 linkTextData = shortenedLinkTextData,
                 modifier = Modifier.padding(16.dp),
-                onClick = {
-                    uriHandler.openUri(it)
-                }
+                onClick = { uriHandler.openUri(it) },
+                textColor = textColor,
+                isDarkThemeEnabled = isDarkThemeEnabled
             )
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -105,21 +112,17 @@ fun NewsCard(news: News, onLikeClicked: (news: News) -> Unit,
                 horizontalArrangement = Arrangement.End
             ) {
                 IconButton(
-                    onClick = {
-                        onLikeClicked.invoke(news)
-                    }
+                    onClick = { onLikeClicked.invoke(news) }
                 ) {
                     Icon(
                         imageVector = if (news.favourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                        contentDescription = "like",
+                        contentDescription = "Like",
                         tint = if (news.favourite) Color.Red else Color.Black
                     )
                 }
 
                 IconButton(
-                    onClick = {
-                        onImportantClicked.invoke(news)
-                    }
+                    onClick = { onImportantClicked.invoke(news) }
                 ) {
                     Icon(
                         imageVector = if (news.important) Icons.Default.Bookmark else Icons.Default.BookmarkBorder,
@@ -131,7 +134,6 @@ fun NewsCard(news: News, onLikeClicked: (news: News) -> Unit,
         }
     }
 }
-
 
 
 fun getShortenedTextData(textData: List<LinkTextData>, maxLength: Int): List<LinkTextData> {
@@ -162,7 +164,9 @@ fun getShortenedTextData(textData: List<LinkTextData>, maxLength: Int): List<Lin
 
 
 @Composable
-fun NewsCardInfo(news: News) {
+fun NewsCardInfo(news: News,
+                 isDarkThemeEnabled: Boolean) {
+    val textColor = if (isDarkThemeEnabled) Color.White else Color.DarkGray
 
     Column(
         modifier = Modifier
@@ -185,7 +189,9 @@ fun NewsCardInfo(news: News) {
             modifier = Modifier.padding(top = 5.dp),
             onClick = {
                 uriHandler.openUri(it)
-            }
+            },
+            isDarkThemeEnabled = isDarkThemeEnabled,
+            textColor = textColor
         )
     }
 
