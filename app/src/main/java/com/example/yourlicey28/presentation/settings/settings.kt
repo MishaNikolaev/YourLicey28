@@ -381,8 +381,8 @@ data class ProjectMember(
 val members = listOf(
     ProjectMember(
         "https://avatars.githubusercontent.com/u/111734592?s=400&u=a54918d28c1e4037ad6a610c66b0424b1bb3a90f&v=4",
-        "Mikhail Nikolaev",
-        52,
+        "nmichail",
+        100,
         "https://github.com/MishaNikolaev"
     ),
 )
