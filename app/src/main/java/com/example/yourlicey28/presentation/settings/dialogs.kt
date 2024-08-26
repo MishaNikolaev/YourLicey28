@@ -158,50 +158,38 @@ fun FeedbackFormBottomSheet(openBottomSheet: Boolean, onDismiss: () -> Unit) {
 }
 @Composable
 fun ThemeSelectionBox(onThemeSelected: (String) -> Unit) {
-    var selectedTheme by rememberSaveable { mutableStateOf("Тёмная") }
-    val backgroundColor = if (selectedTheme == "Тёмная") Color.DarkGray else Color.White
-    val textColor = if (selectedTheme == "Тёмная") Color.DarkGray else Color.DarkGray
 
     Column(modifier = Modifier.padding(16.dp)) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-                    selectedTheme = "Светлая"
-                    onThemeSelected(selectedTheme)
+
                 }
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "Светлая",
-                color = textColor,
+                color = Color.Black,
                 modifier = Modifier
                     .weight(1f)
                     .padding(end = 8.dp)
             )
-            if (selectedTheme == "Светлая") {
-                Icon(
-                    imageVector = Icons.Default.Check,
-                    contentDescription = "Selected",
-                    tint = Color.DarkGray
-                )
-            }
         }
         Spacer(modifier = Modifier.height(8.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-                    selectedTheme = "Тёмная"
-                    onThemeSelected(selectedTheme)
+
                 }
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "Тёмная",
-                color = textColor,
+                color = Color.Black,
                 modifier = Modifier
                     .weight(1f)
                     .padding(end = 8.dp)
