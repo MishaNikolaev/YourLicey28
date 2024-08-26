@@ -12,6 +12,7 @@ val Pink40 = Color(0xFF7D5260)
 
 val DarkBlueLC = Color(0xFF191A1F)
 val BlueLC = Color(0xFF1402DF)
+val BlueSecondLC = Color(0xFF0C0464)
 val LightBlueLC = Color(0xFF0D6CFC)
 val WhiteLC = Color(0xFFF7F5F5)
 val GrayLC = Color(0xFF7978A0)

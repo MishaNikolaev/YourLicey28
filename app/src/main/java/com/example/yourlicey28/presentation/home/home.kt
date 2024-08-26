@@ -1,6 +1,5 @@
 package com.example.yourlicey28.presentation.home
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.annotation.DrawableRes
@@ -24,21 +23,21 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Card
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -47,16 +46,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.yourlicey28.R
 import com.example.yourlicey28.presentation.activityComponents.WelcomeRoutes
+import com.example.yourlicey28.ui.theme.BlueLC
+import com.example.yourlicey28.ui.theme.DarkBlueLC
 import com.example.yourlicey28.ui.theme.DarkLC
-import com.example.yourlicey28.ui.theme.LightBlueLC
-import com.example.yourlicey28.ui.theme.WhiteLC
+import com.example.yourlicey28.ui.theme.chooseTheme.ThemeViewModel
 import com.example.yourlicey28.ui.theme.monterrat
 import com.example.yourlicey28.ui.theme.roboto
 import kotlinx.coroutines.delay
+
 
 data class Images(
     @DrawableRes val imageRes: Int,
@@ -106,8 +107,17 @@ val titleListDown = listOf(
 
 
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen(
+    navController: NavHostController,
+    themeViewModel: ThemeViewModel = hiltViewModel()
+) {
     val context = LocalContext.current
+    val isDarkThemeEnabled by themeViewModel.isDarkThemeEnabled.collectAsState()
+
+    val backgroundColor = if (isDarkThemeEnabled) DarkLC else Color.White
+    val textColor = if (isDarkThemeEnabled) Color.White else Color.DarkGray
+    val cardBackgroundColor = if (isDarkThemeEnabled) DarkLC else Color.White
+    val cardTextColor = if (isDarkThemeEnabled) Color.DarkGray else Color.DarkGray
 
     fun openUrl(url: String) {
         val intent = Intent(Intent.ACTION_VIEW).apply {
@@ -115,19 +125,19 @@ fun HomeScreen(navController: NavHostController) {
         }
         context.startActivity(intent)
     }
+
     Column(
         modifier = Modifier
-            .background(Color.White)
+            .background(backgroundColor)
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-
         Text(
             text = "Популярное",
             fontSize = 20.sp,
             fontFamily = monterrat,
             fontWeight = FontWeight.Bold,
-            color = Color.DarkGray,
+            color = textColor,
             modifier = Modifier
                 .padding(start = 20.dp, top = 20.dp)
         )
@@ -136,7 +146,8 @@ fun HomeScreen(navController: NavHostController) {
             items(imagesList.size) {
                 ImagesItem(
                     it,
-                    navController = navController
+                    navController = navController,
+                    isDarkThemeEnabled = isDarkThemeEnabled
                 )
             }
         }
@@ -145,7 +156,7 @@ fun HomeScreen(navController: NavHostController) {
             fontSize = 20.sp,
             fontFamily = monterrat,
             fontWeight = FontWeight.Bold,
-            color = Color.DarkGray,
+            color = textColor,
             modifier = Modifier
                 .padding(start = 20.dp, top = 20.dp)
         )
@@ -154,7 +165,8 @@ fun HomeScreen(navController: NavHostController) {
             items(titleListDown.size) {
                 ImagesItemDown(
                     it,
-                    navController = navController
+                    navController = navController,
+                    isDarkThemeEnabled = isDarkThemeEnabled
                 )
             }
         }
@@ -163,10 +175,12 @@ fun HomeScreen(navController: NavHostController) {
             fontSize = 20.sp,
             fontFamily = monterrat,
             fontWeight = FontWeight.Bold,
-            color = Color.DarkGray,
+            color = textColor,
             modifier = Modifier
                 .padding(start = 20.dp, top = 20.dp)
         )
+
+        // Card 1
         Card(
             modifier = Modifier
                 .padding(top = 15.dp, start = 20.dp)
@@ -181,7 +195,7 @@ fun HomeScreen(navController: NavHostController) {
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(20.dp))
-                    .background(Color.White)
+                    .background(cardBackgroundColor)
             ) {
                 Box(
                     modifier = Modifier
@@ -212,7 +226,7 @@ fun HomeScreen(navController: NavHostController) {
                             text = "Лицей №28",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Normal,
-                            color = Color.Black,
+                            color = cardTextColor, // Изменено здесь
                             modifier = Modifier.weight(1f)
                         )
                         Icon(
@@ -226,7 +240,7 @@ fun HomeScreen(navController: NavHostController) {
                         text = "Перейти на официальный сайт",
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Normal,
-                        color = Color(0xFF414040),
+                        color = cardTextColor, // Изменено здесь
                         modifier = Modifier
                             .padding(start = 50.dp)
                             .align(Alignment.Start)
@@ -235,6 +249,7 @@ fun HomeScreen(navController: NavHostController) {
             }
         }
 
+        // Card 2
         Card(
             modifier = Modifier
                 .padding(top = 15.dp, start = 20.dp)
@@ -249,7 +264,7 @@ fun HomeScreen(navController: NavHostController) {
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(20.dp))
-                    .background(Color.White)
+                    .background(cardBackgroundColor)
             ) {
                 Box(
                     modifier = Modifier
@@ -280,7 +295,7 @@ fun HomeScreen(navController: NavHostController) {
                             text = "Сообщество Лицея №28",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Normal,
-                            color = Color.Black,
+                            color = cardTextColor, // Изменено здесь
                             modifier = Modifier.weight(1f)
                         )
                         Icon(
@@ -294,7 +309,7 @@ fun HomeScreen(navController: NavHostController) {
                         text = "Перейти в сообщество лицея ВКонтакте",
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Normal,
-                        color = Color(0xFF414040),
+                        color = cardTextColor, // Изменено здесь
                         modifier = Modifier
                             .padding(start = 50.dp)
                             .align(Alignment.Start)
@@ -309,16 +324,19 @@ fun HomeScreen(navController: NavHostController) {
 @Composable
 fun ImagesItem(
     index: Int,
-    navController: NavHostController
+    navController: NavHostController,
+    isDarkThemeEnabled: Boolean
 ) {
     val images = imagesList[index]
 
     val backgroundColor = when (images.title) {
-        "Расписание" -> Color(0xFFFFFFFF)
-        "Кружок28" -> Color(0xFFFFFFFF)
-        "Мои учителя" -> Color(0xFFFFFFFF)
-        else -> Color.White
+        "Расписание" -> if (isDarkThemeEnabled) DarkLC else Color.White
+        "Кружок28" -> if (isDarkThemeEnabled) DarkLC else Color.White
+        "Мои учителя" -> if (isDarkThemeEnabled) DarkLC else Color.White
+        else -> if (isDarkThemeEnabled) DarkLC else Color.White
     }
+
+    val textColor = if (isDarkThemeEnabled) Color.White else Color.DarkGray
 
     Card(
         shape = RoundedCornerShape(8.dp),
@@ -360,26 +378,69 @@ fun ImagesItem(
                 text = images.title,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.DarkGray,
+                color = textColor,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
         }
     }
 }
-
 @Composable
 fun ImagesItemDown(
     index: Int,
-    navController: NavHostController
+    navController: NavHostController,
+    isDarkThemeEnabled: Boolean
 ) {
     val context = LocalContext.current
     val titleDown = titleListDown[index]
-    val backgroundColor = when (titleDown.title) {
-        "Приём в 1 класс" -> Color(0xFFC7F1C8)
-        "Приём в 10 класс" -> Color(0xFFFDBAD1)
-        "О лицее" -> Color(0xFFFFE8A5)
-        else -> Color.White
+    val backgroundColor = if (isDarkThemeEnabled) {
+        when (titleDown.title) {
+            "Приём в 1 класс" -> Brush.linearGradient(
+                colors = listOf(Color(0xFFC7F1C8), Color(0xFFB3E5FC)),
+                start = Offset(0f, 0f),
+                end = Offset(1000f, 1000f)
+            )
+            "Приём в 10 класс" -> Brush.linearGradient(
+                colors = listOf(Color(0xFFFDBAD1), Color(0xFFFF4081)),
+                start = Offset(0f, 0f),
+                end = Offset(1000f, 1000f)
+            )
+            "О лицее" -> Brush.linearGradient(
+                colors = listOf(Color(0xFFFFE8A5), Color(0xFFFFC107)),
+                start = Offset(0f, 0f),
+                end = Offset(1000f, 1000f)
+            )
+            else -> Brush.linearGradient(
+                colors = listOf(Color.White, Color.LightGray),
+                start = Offset(0f, 0f),
+                end = Offset(1000f, 1000f)
+            )
+        }
+    } else {
+        when (titleDown.title) {
+            "Приём в 1 класс" -> Brush.linearGradient(
+                colors = listOf(Color(0xFFC7F1C8), Color(0xFFB3E5FC)),
+                start = Offset(0f, 0f),
+                end = Offset(1000f, 1000f)
+            )
+            "Приём в 10 класс" -> Brush.linearGradient(
+                colors = listOf(Color(0xFFFDBAD1), Color(0xFFFF4081)),
+                start = Offset(0f, 0f),
+                end = Offset(1000f, 1000f)
+            )
+            "О лицее" -> Brush.linearGradient(
+                colors = listOf(Color(0xFFFFE8A5), Color(0xFFFFC107)),
+                start = Offset(0f, 0f),
+                end = Offset(1000f, 1000f)
+            )
+            else -> Brush.linearGradient(
+                colors = listOf(Color.White, Color.LightGray),
+                start = Offset(0f, 0f),
+                end = Offset(1000f, 1000f)
+            )
+        }
     }
+
+    val textColor = if (isDarkThemeEnabled) Color.DarkGray else Color.DarkGray
 
     fun openUrl(url: String) {
         val intent = Intent(Intent.ACTION_VIEW).apply {
@@ -404,7 +465,7 @@ fun ImagesItemDown(
             },
         elevation = CardDefaults.cardElevation(8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = backgroundColor
+            containerColor = Color.Transparent
         )
     ) {
         Column(
@@ -417,7 +478,7 @@ fun ImagesItemDown(
                 text = titleDown.title,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.DarkGray,
+                color = textColor,
                 fontFamily = roboto,
                 modifier = Modifier.align(Alignment.Start)
             )
@@ -426,7 +487,7 @@ fun ImagesItemDown(
                 text = titleDown.info,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Normal,
-                color = Color(0xFF666666),
+                color = textColor,
                 fontFamily = roboto,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
@@ -444,56 +505,17 @@ fun ImagesItemDown(
                     }
                     .height(40.dp)
                     .width(95.dp)
-                    .background(Color.Black),
+                    .background(if (isDarkThemeEnabled) Color.DarkGray else textColor),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = titleDown.bottomText,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Normal,
-                    color = Color.White,
+                    color = if (isDarkThemeEnabled) Color.White else Color.White,
                     fontFamily = roboto,
                 )
             }
         }
     }
 }
-
-@Composable
-fun ImageCarousel(images: List<Int>, durationMillis: Int) {
-    val carouselState = remember { mutableStateOf(0) }
-    val context = LocalContext.current
-
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(durationMillis.toLong())
-            carouselState.value = (carouselState.value + 1) % images.size
-        }
-    }
-
-    val imageModifier = Modifier
-        .fillMaxWidth()
-        .height(150.dp)
-        .clip(
-            RoundedCornerShape(
-                topStart = 0.dp,
-                topEnd = 0.dp,
-                bottomStart = 25.dp,
-                bottomEnd = 25.dp
-            )
-        )
-
-    Box(modifier = Modifier.fillMaxWidth()) {
-        images.forEachIndexed { index, imageRes ->
-            if (index == carouselState.value) {
-                Image(
-                    painter = painterResource(id = imageRes),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = imageModifier
-                )
-            }
-        }
-    }
-}
-

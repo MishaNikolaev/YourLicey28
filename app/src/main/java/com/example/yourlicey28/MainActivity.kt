@@ -18,7 +18,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.yourlicey28.presentation.activityComponents.MainScreen
-import com.example.yourlicey28.presentation.activityComponents.NavGraphWelcome
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenFirst
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenSecond
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenThird

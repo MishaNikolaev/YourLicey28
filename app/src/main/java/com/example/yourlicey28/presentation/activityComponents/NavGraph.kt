@@ -7,11 +7,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Card
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -66,6 +69,7 @@ import com.example.yourlicey28.presentation.welcome.WelcomeViewModel
 import com.example.yourlicey28.ui.theme.DarkLC
 import com.example.yourlicey28.ui.theme.GrayLC
 import com.example.yourlicey28.ui.theme.LightBlueLC
+import com.example.yourlicey28.ui.theme.chooseTheme.ThemeViewModel
 
 private const val TAG = "NavGraph"
 
@@ -116,147 +120,12 @@ sealed class WelcomeRoutes(val route: String) {
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun NavGraphWelcome(
+fun MainScreen(
     navController: NavHostController,
-    viewModel: WelcomeViewModel = hiltViewModel()
+    viewModel: WelcomeViewModel,
+    themeViewModel: ThemeViewModel = hiltViewModel() // Добавляем ThemeViewModel для отслеживания темы
 ) {
-    NavHost(
-        navController = navController,
-        startDestination = if (viewModel.state.isInitial != -1) {
-            WelcomeRoutes.NewsScreen.route
-        } else {
-            WelcomeRoutes.WelcomeScreenFirst.route
-        }
-    ) {
-        composable(WelcomeRoutes.WelcomeScreenFirst.route) {
-            WelcomeScreenFirst(navController = navController)
-        }
-
-        composable(WelcomeRoutes.WelcomeScreenSecond.route) {
-            WelcomeScreenSecond(navController = navController)
-        }
-
-        composable(WelcomeRoutes.WelcomeScreenThird.route) {
-            WelcomeScreenThird(navController = navController)
-        }
-
-        // Вложенный NavHost для экранов с BottomNavigationBar
-        composable(WelcomeRoutes.NewsScreen.route) {
-            MainScreen(navController = navController, viewModel = viewModel)
-        }
-
-        composable(WelcomeRoutes.KruzhokScreen.route) {
-            KruzhokScreen(navController = navController)
-        }
-        composable(WelcomeRoutes.TimeTableScreen.route) {
-            TimeTableScreen(navController = navController)
-        }
-
-        composable(WelcomeRoutes.MyTeachersScreen.route) {
-            MyTeachersScreen(navController = navController)
-        }
-
-        composable(WelcomeRoutes.EnterToFirstClass.route) {
-            EnterToFirstClass(navController = navController)
-        }
-
-        composable(WelcomeRoutes.EnterToTenClass.route) {
-            EnterToTenClass(navController = navController)
-        }
-
-        composable(WelcomeRoutes.AboutSchool.route) {
-            AboutSchool(navController = navController)
-        }
-
-        composable(WelcomeRoutes.HomeScreen.route) {
-            HomeScreen(navController)
-        }
-
-        composable(WelcomeRoutes.ChooseTimeTable.route) {
-            ChooseTimeTable(navController)
-        }
-
-        // First classes time table
-        composable(WelcomeRoutes.FirstAClass.route) {
-            First_A_Class(navController = navController)
-        }
-        composable(WelcomeRoutes.FirstBClass.route) {
-            First_b_Class(navController = navController)
-        }
-        composable(WelcomeRoutes.FirstVClass.route) {
-            First_V_Class(navController = navController)
-        }
-        composable(WelcomeRoutes.FirstGClass.route) {
-            First_G_Class(navController = navController)
-        }
-        composable(WelcomeRoutes.FirstDClass.route) {
-            First_d_Class(navController = navController)
-        }
-
-        // Second classes time table
-        composable(WelcomeRoutes.SecondAClass.route) {
-            Second_A_Class(navController = navController)
-        }
-        composable(WelcomeRoutes.SecondBClass.route) {
-            Second_b_Class(navController = navController)
-        }
-        composable(WelcomeRoutes.SecondVClass.route) {
-            Second_v_Class(navController = navController)
-        }
-        composable(WelcomeRoutes.SecondtGClass.route) {
-            Second_g_Class(navController = navController)
-        }
-
-        // Third classes time table
-        composable(WelcomeRoutes.ThirdAClass.route) {
-            Third_A_Class(navController = navController)
-        }
-        composable(WelcomeRoutes.ThirdBClass.route) {
-            Third_b_Class(navController = navController)
-        }
-        composable(WelcomeRoutes.ThirdVClass.route) {
-            Third_V_Class(navController = navController)
-        }
-        composable(WelcomeRoutes.ThirdGClass.route) {
-            Third_G_Class(navController = navController)
-        }
-
-        // Fourth classes time table
-        composable(WelcomeRoutes.ForthAClass.route) {
-            Fourth_A_Class(navController = navController)
-        }
-        composable(WelcomeRoutes.ForthBClass.route) {
-            Fourth_B_Class(navController = navController)
-        }
-        composable(WelcomeRoutes.ForthVClass.route) {
-            Fourth_V_Class(navController = navController)
-        }
-        composable(WelcomeRoutes.ForthGClass.route) {
-            Fourth_G_Class(navController = navController)
-        }
-
-        // Fiveth classes time table
-        composable(WelcomeRoutes.FivethAClass.route) {
-            Fiveth_A_Class(navController = navController)
-        }
-        composable(WelcomeRoutes.FivethBClass.route) {
-            Fiveth_b_Class(navController = navController)
-        }
-        composable(WelcomeRoutes.FivethVClass.route) {
-            Fiveth_v_Class(navController = navController)
-        }
-        composable(WelcomeRoutes.FivethGClass.route) {
-            Fiveth_g_Class(navController = navController)
-        }
-    }
-}
-
-
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-fun MainScreen(navController: NavHostController, viewModel: WelcomeViewModel) {
     val mainNavController = rememberNavController()
 
     val navBackStackEntry by mainNavController.currentBackStackEntryAsState()
@@ -269,7 +138,7 @@ fun MainScreen(navController: NavHostController, viewModel: WelcomeViewModel) {
     )
 
     Scaffold(
-        bottomBar = { if (showBottomBar) BottomNavigationBar(mainNavController) }
+        bottomBar = { if (showBottomBar) BottomNavigationBar(mainNavController, themeViewModel) }
     ) { innerPadding ->
         NavigationGraph(
             navController = mainNavController,
@@ -279,7 +148,7 @@ fun MainScreen(navController: NavHostController, viewModel: WelcomeViewModel) {
 }
 
 @Composable
-fun BottomNavigationBar(navController: NavHostController) {
+fun BottomNavigationBar(navController: NavHostController, themeViewModel: ThemeViewModel) {
     val items = listOf(
         BottomNavItem.Home,
         BottomNavItem.News,
@@ -289,7 +158,13 @@ fun BottomNavigationBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    NavigationBar(containerColor = Color.White) {
+    val isDarkThemeEnabled by themeViewModel.isDarkThemeEnabled.collectAsState()
+
+    val backgroundColor = if (isDarkThemeEnabled) DarkLC else Color.White
+    val activeColor = LightBlueLC  // Используем один и тот же цвет для активного состояния
+    val inactiveColor = if (isDarkThemeEnabled) Color.Gray else GrayLC
+
+    NavigationBar(containerColor = backgroundColor) {
         items.forEach { item ->
             val isActive = currentRoute == item.route
             val iconResId = if (isActive) item.activeIcon else item.icon
@@ -305,7 +180,7 @@ fun BottomNavigationBar(navController: NavHostController) {
                 label = {
                     Text(
                         text = item.title,
-                        color = if (isActive) LightBlueLC else GrayLC
+                        color = if (isActive) activeColor else inactiveColor
                     )
                 },
                 selected = false,
@@ -317,12 +192,17 @@ fun BottomNavigationBar(navController: NavHostController) {
                             restoreState = true
                         }
                     }
-                }
+                },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = activeColor,
+                    unselectedIconColor = inactiveColor,
+                    selectedTextColor = activeColor,
+                    unselectedTextColor = inactiveColor
+                )
             )
         }
     }
 }
-
 
 sealed class BottomNavItem(
     val route: String,

@@ -21,6 +21,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,25 +42,37 @@ import com.example.yourlicey28.domain.model.News
 import com.example.yourlicey28.ui.theme.DarkLC
 import com.example.yourlicey28.ui.theme.LightBlueLC
 import com.example.yourlicey28.ui.theme.WhiteLC
+import com.example.yourlicey28.ui.theme.chooseTheme.ThemeViewModel
 import com.example.yourlicey28.ui.theme.monterrat
 import com.example.yourlicey28.ui.theme.roboto
 
 @ExperimentalFoundationApi
 @Composable
-fun NewsScreen(viewModel: NewsViewModel, onLikeClicked: (news: News) -> Unit,
-               onImportantClicked: (news: News) -> Unit) {
+fun NewsScreen(
+    viewModel: NewsViewModel,
+    onLikeClicked: (news: News) -> Unit,
+    onImportantClicked: (news: News) -> Unit,
+    themeViewModel: ThemeViewModel = hiltViewModel() // Добавлено для отслеживания темы
+) {
     var selectedTab by remember { mutableStateOf("Новости") }
+    val isDarkThemeEnabled by themeViewModel.isDarkThemeEnabled.collectAsState()
 
-    println(viewModel.state)
-    Column {
+    val backgroundColor = if (isDarkThemeEnabled) DarkLC else Color.White
+    val textColor = if (isDarkThemeEnabled) Color.White else Color.DarkGray
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(backgroundColor)
+    ) {
         Row(
             modifier = Modifier
                 .padding(start = 20.dp, top = 20.dp)
                 .fillMaxWidth()
         ) {
-            TabItem(selectedTab, "Новости") { selectedTab = "Новости" }
+            TabItem(selectedTab, "Новости", textColor, isDarkThemeEnabled) { selectedTab = "Новости" }
             Spacer(modifier = Modifier.width(16.dp))
-            TabItem(selectedTab, "Важное") { selectedTab = "Важное" }
+            TabItem(selectedTab, "Важное", textColor, isDarkThemeEnabled) { selectedTab = "Важное" }
         }
 
         if (selectedTab == "Новости") {
@@ -68,18 +81,18 @@ fun NewsScreen(viewModel: NewsViewModel, onLikeClicked: (news: News) -> Unit,
                 contentPadding = PaddingValues(9.dp)
             ) {
                 items(viewModel.state.news.size) { index ->
-                    NewsCard(news = viewModel.state.news[index],
-                        onLikeClicked = { it ->
-                            onLikeClicked.invoke(it)
-                        },
-                        onImportantClicked = { it ->
-                            onImportantClicked.invoke(it)
-                        })
+                    NewsCard(
+                        news = viewModel.state.news[index],
+                        onLikeClicked = { it -> onLikeClicked.invoke(it) },
+                        onImportantClicked = { it -> onImportantClicked.invoke(it) },
+                        isDarkThemeEnabled = isDarkThemeEnabled
+                    )
                 }
             }
         } else {
             ImportantContent()
         }
+
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -90,7 +103,7 @@ fun NewsScreen(viewModel: NewsViewModel, onLikeClicked: (news: News) -> Unit,
                     text = viewModel.state.error,
                     fontFamily = roboto,
                     fontSize = 16.sp,
-                    color = Color.DarkGray,
+                    color = textColor,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(top = 70.dp)
                 )
@@ -102,16 +115,22 @@ fun NewsScreen(viewModel: NewsViewModel, onLikeClicked: (news: News) -> Unit,
     }
 }
 
-
 @Composable
-fun TabItem(selectedTab: String, tabName: String, onClicked: () -> Unit) {
+fun TabItem(
+    selectedTab: String,
+    tabName: String,
+    textColor: Color,
+    isDarkThemeEnabled: Boolean,
+    onClicked: () -> Unit
+) {
+    val backgroundColor = if (selectedTab == tabName) LightBlueLC else if (isDarkThemeEnabled) DarkLC else Color.Transparent
     Box(
         modifier = Modifier
             .height(45.dp)
             .width(100.dp)
             .clip(RoundedCornerShape(20.dp))
             .background(
-                color = if (selectedTab == tabName) LightBlueLC else Color.Transparent,
+                color = backgroundColor,
                 shape = RoundedCornerShape(16.dp)
             )
             .clickable { onClicked() }
@@ -123,13 +142,17 @@ fun TabItem(selectedTab: String, tabName: String, onClicked: () -> Unit) {
             fontSize = 15.sp,
             fontFamily = roboto,
             fontWeight = FontWeight.Bold,
-            color = if (selectedTab == tabName) DarkLC else Color(0xFF888899)
+            color = if (selectedTab == tabName) DarkLC else textColor
         )
     }
 }
 
 @Composable
-fun ImportantContent() {
+fun ImportantContent(themeViewModel: ThemeViewModel = hiltViewModel()) {
+    val isDarkThemeEnabled by themeViewModel.isDarkThemeEnabled.collectAsState()
+
+    val textColor = if (isDarkThemeEnabled) Color.White else Color.DarkGray
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -138,7 +161,7 @@ fun ImportantContent() {
             text = "Важное содержимое",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.DarkGray
+            color = textColor
         )
     }
 }
