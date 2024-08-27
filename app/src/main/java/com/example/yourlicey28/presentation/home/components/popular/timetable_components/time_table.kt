@@ -27,14 +27,18 @@ import androidx.navigation.NavHostController
 import com.example.yourlicey28.R
 import com.example.yourlicey28.presentation.activityComponents.WelcomeRoutes
 import com.example.yourlicey28.ui.theme.BlueLC
+import com.example.yourlicey28.ui.theme.DarkLC
 import com.example.yourlicey28.ui.theme.LightBlueLC
 import com.example.yourlicey28.ui.theme.monterrat
 import com.example.yourlicey28.ui.theme.roboto
 
 @Composable
-fun TimeTableScreen(navController: NavHostController){
+fun TimeTableScreen(navController: NavHostController, isDarkThemeEnabled: Boolean){
+    val backgroundColor = if (isDarkThemeEnabled) DarkLC else Color.White
+
+    val textColor = if (isDarkThemeEnabled) Color.White else Color.DarkGray
     Column(
-        modifier = Modifier
+        modifier = Modifier.background(backgroundColor)
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
@@ -52,7 +56,8 @@ fun TimeTableScreen(navController: NavHostController){
             fontSize = 20.sp,
             fontFamily = monterrat,
             fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            color = textColor
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
@@ -60,7 +65,7 @@ fun TimeTableScreen(navController: NavHostController){
             fontSize = 16.sp,
             fontFamily = roboto,
             textAlign = TextAlign.Center,
-            color = Color.DarkGray
+            color = textColor
         )
         Spacer(modifier = Modifier.height(24.dp))
         Button(onClick = {
@@ -73,7 +78,8 @@ fun TimeTableScreen(navController: NavHostController){
                 fontSize = 14.sp,
                 fontFamily = monterrat,
                 fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                color = Color.White
             )
         }
     }

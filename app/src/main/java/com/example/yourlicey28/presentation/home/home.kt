@@ -320,7 +320,6 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(20.dp))
     }
 }
-
 @Composable
 fun ImagesItem(
     index: Int,
@@ -329,11 +328,25 @@ fun ImagesItem(
 ) {
     val images = imagesList[index]
 
-    val backgroundColor = when (images.title) {
-        "Расписание" -> if (isDarkThemeEnabled) DarkLC else Color.White
-        "Кружок28" -> if (isDarkThemeEnabled) DarkLC else Color.White
-        "Мои учителя" -> if (isDarkThemeEnabled) DarkLC else Color.White
-        else -> if (isDarkThemeEnabled) DarkLC else Color.White
+    val background = if (isDarkThemeEnabled) {
+        when (images.title) {
+            "Расписание" -> Brush.verticalGradient(
+                colors = listOf(Color(0xFF2C3E50), Color(0xFF4CA1AF))
+            )
+            "Кружок28" -> Brush.verticalGradient(
+                colors = listOf(Color(0xFF2C3E50), Color(0xFF4CA1AF))
+            )
+            "Мои учителя" -> Brush.verticalGradient(
+                colors = listOf(Color(0xFF2C3E50), Color(0xFF4CA1AF))
+            )
+            else -> Brush.verticalGradient(
+                colors = listOf(Color(0xFF2C3E50), Color(0xFF4CA1AF))
+            )
+        }
+    } else {
+        Brush.verticalGradient(
+            colors = listOf(Color.White, Color.White)
+        )
     }
 
     val textColor = if (isDarkThemeEnabled) Color.White else Color.DarkGray
@@ -354,12 +367,12 @@ fun ImagesItem(
             },
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(
-            containerColor = backgroundColor
+            containerColor = Color.Transparent // Делаем контейнер прозрачным, чтобы увидеть задний фон
         )
     ) {
         Column(
             modifier = Modifier
-                .background(backgroundColor)
+                .background(background)
                 .padding(8.dp)
                 .fillMaxSize(),
             verticalArrangement = Arrangement.Center,

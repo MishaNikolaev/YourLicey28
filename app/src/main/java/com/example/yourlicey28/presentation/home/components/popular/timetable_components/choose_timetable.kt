@@ -33,33 +33,26 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.yourlicey28.presentation.activityComponents.WelcomeRoutes
 import com.example.yourlicey28.presentation.home.titleListDown
+import com.example.yourlicey28.ui.theme.DarkLC
 import com.example.yourlicey28.ui.theme.LightBlueLC
 import com.example.yourlicey28.ui.theme.monterrat
 import com.example.yourlicey28.ui.theme.roboto
 data class ClassInfo(val info: String)
 
 @Composable
-fun ChooseTimeTable(navController: NavController) {
-    Column {
+fun ChooseTimeTable(navController: NavController,isDarkThemeEnabled : Boolean ) {
+    val backgroundColor = if (isDarkThemeEnabled) DarkLC else Color.White
+
+    val textColor = if (isDarkThemeEnabled) Color.White else Color.DarkGray
+    Column(modifier = Modifier.background(backgroundColor)) {
         Row {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back",
-                modifier = Modifier
-                    .size(50.dp)
-                    .padding(start = 20.dp, top = 20.dp)
-                    .clickable {
-                        navController.navigate(WelcomeRoutes.TimeTableScreen.route)
-                    },
-                tint = LightBlueLC
-            )
             Spacer(modifier = Modifier.width(30.dp))
             Text(
                 text = "Выберите свой класс",
                 fontSize = 18.sp,
                 fontFamily = monterrat,
                 textAlign = TextAlign.Center,
-                color = Color.DarkGray,
+                color = textColor,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(top = 25.dp)
             )
@@ -69,7 +62,8 @@ fun ChooseTimeTable(navController: NavController) {
             items(classList) { classInfo ->
                 ClassCard(
                     classInfo = classInfo,
-                    navController = navController
+                    navController = navController,
+                    isDarkThemeEnabled
                 )
             }
         }
@@ -102,9 +96,12 @@ val classList = listOf(
 )
 
 @Composable
-fun ClassCard(classInfo: ClassInfo, navController: NavController) {
+fun ClassCard(classInfo: ClassInfo, navController: NavController, isDarkThemeEnabled: Boolean) {
+    val backgroundColor = if (isDarkThemeEnabled) DarkLC else Color.White
+    val backgroundColorSecond = if (isDarkThemeEnabled) Color(0xFF2C3E50) else Color.White
+    val textColor = if (isDarkThemeEnabled) Color.White else Color.DarkGray
     Card(
-        modifier = Modifier
+        modifier = Modifier.background(backgroundColor)
             .fillMaxWidth()
             .padding(8.dp)
             .clickable {
@@ -139,10 +136,10 @@ fun ClassCard(classInfo: ClassInfo, navController: NavController) {
                 }
             },
         elevation = CardDefaults.cardElevation(4.dp),
-        colors = CardDefaults.cardColors(Color.White)
+        colors = CardDefaults.cardColors(backgroundColorSecond)
     ) {
         Row(
-            modifier = Modifier
+            modifier = Modifier.background(backgroundColorSecond)
                 .fillMaxWidth()
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -152,7 +149,8 @@ fun ClassCard(classInfo: ClassInfo, navController: NavController) {
                 text = classInfo.info,
                 fontSize = 18.sp,
                 fontFamily = roboto,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                color = textColor
             )
         }
     }

@@ -124,7 +124,8 @@ sealed class WelcomeRoutes(val route: String) {
 fun MainScreen(
     navController: NavHostController,
     viewModel: WelcomeViewModel,
-    themeViewModel: ThemeViewModel = hiltViewModel() // Добавляем ThemeViewModel для отслеживания темы
+    themeViewModel: ThemeViewModel = hiltViewModel(),
+    isDarkThemeEnabled : Boolean
 ) {
     val mainNavController = rememberNavController()
 
@@ -142,7 +143,8 @@ fun MainScreen(
     ) { innerPadding ->
         NavigationGraph(
             navController = mainNavController,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
+            isDarkThemeEnabled = isDarkThemeEnabled
         )
     }
 }
@@ -219,7 +221,8 @@ sealed class BottomNavItem(
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modifier) {
+fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modifier,
+                    isDarkThemeEnabled: Boolean) {
     NavHost(
         navController = navController,
         startDestination = BottomNavItem.Home.route,
@@ -245,14 +248,15 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modif
             SettingsScreen(navController)
         }
         composable(WelcomeRoutes.KruzhokScreen.route) {
-            KruzhokScreen(navController = navController)
+            KruzhokScreen(navController = navController, isDarkThemeEnabled)
         }
         composable(WelcomeRoutes.TimeTableScreen.route) {
-            TimeTableScreen(navController = navController)
+            TimeTableScreen(navController = navController, isDarkThemeEnabled)
         }
 
         composable(WelcomeRoutes.MyTeachersScreen.route) {
-            MyTeachersScreen(navController = navController)
+            MyTeachersScreen(navController = navController,
+                isDarkThemeEnabled = isDarkThemeEnabled)
         }
 
         composable(WelcomeRoutes.EnterToFirstClass.route) {
@@ -270,7 +274,7 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modif
             HomeScreen(navController)
         }
         composable(WelcomeRoutes.ChooseTimeTable.route) {
-            ChooseTimeTable(navController)
+            ChooseTimeTable(navController, isDarkThemeEnabled)
         }
 //First classes time table
         composable(WelcomeRoutes.FirstAClass.route) {

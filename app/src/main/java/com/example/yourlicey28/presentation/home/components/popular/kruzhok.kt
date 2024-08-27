@@ -2,6 +2,7 @@ package com.example.yourlicey28.presentation.home.components.popular
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -38,8 +39,11 @@ import com.example.yourlicey28.ui.theme.monterrat
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun KruzhokScreen(navController: NavHostController) {
-        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+fun KruzhokScreen(navController: NavHostController, isDarkThemeEnabled : Boolean) {
+        val backgroundColor = if (isDarkThemeEnabled) Color(0xFF2C3E50) else Color.White
+
+        val textColor = if (isDarkThemeEnabled) Color.White else Color.DarkGray
+        Column(modifier = Modifier.verticalScroll(rememberScrollState()).background(backgroundColor)) {
                 Image(
                         painter = painterResource(R.drawable.psoiuihqjoa),
                         contentDescription = null,
@@ -62,7 +66,7 @@ fun KruzhokScreen(navController: NavHostController) {
                         fontFamily = monterrat,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 12.sp,
-                        color = Color.DarkGray
+                        color = textColor
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 Image(
@@ -90,7 +94,7 @@ fun KruzhokScreen(navController: NavHostController) {
                         fontFamily = monterrat,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 12.sp,
-                        color = Color.DarkGray
+                        color = textColor
                 )
                 ClickableLinkText(monterrat)
                 Spacer(modifier = Modifier.height(20.dp))
