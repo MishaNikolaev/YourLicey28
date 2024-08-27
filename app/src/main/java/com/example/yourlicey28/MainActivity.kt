@@ -12,6 +12,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -23,6 +25,7 @@ import com.example.yourlicey28.presentation.welcome.WelcomeScreenSecond
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenThird
 import com.example.yourlicey28.presentation.welcome.WelcomeViewModel
 import com.example.yourlicey28.ui.theme.YourLicey28Theme
+import com.example.yourlicey28.ui.theme.chooseTheme.ThemeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,8 +38,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             val viewModel: WelcomeViewModel = hiltViewModel()
-
-            MainScreen(navController, viewModel)
+            val themeViewModel: ThemeViewModel = hiltViewModel()
+            val isDarkThemeEnabled by themeViewModel.isDarkThemeEnabled.collectAsState()
+            MainScreen(navController, viewModel,
+                isDarkThemeEnabled = isDarkThemeEnabled)
         }
     }
 }

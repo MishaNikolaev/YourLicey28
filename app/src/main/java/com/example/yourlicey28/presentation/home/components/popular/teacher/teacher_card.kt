@@ -1,6 +1,7 @@
 package com.example.yourlicey28.presentation.home.components.popular.teacher
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -24,7 +26,12 @@ import com.example.yourlicey28.ui.theme.LightBlueLC
 import com.example.yourlicey28.ui.theme.monterrat
 import com.example.yourlicey28.ui.theme.roboto
 @Composable
-fun TeacherCard(teacher: Teacher) {
+fun TeacherCard(teacher: Teacher, isDarkThemeEnabled: Boolean) {
+    val backgroundColor = if (isDarkThemeEnabled) Color(0xFF2C3E50) else Color.White
+
+    val textColor = if (isDarkThemeEnabled) Color.White else Color.DarkGray
+    val infoTextColor = if (isDarkThemeEnabled) Color.LightGray else Color.DarkGray
+    val emailTextColor = if (isDarkThemeEnabled) Color.Cyan else LightBlueLC
 
     Card(
         modifier = Modifier
@@ -33,7 +40,7 @@ fun TeacherCard(teacher: Teacher) {
             .height(150.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = Color.Transparent // Делаем контейнер прозрачным, чтобы видеть задний фон
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp
@@ -41,6 +48,7 @@ fun TeacherCard(teacher: Teacher) {
     ) {
         Column(
             modifier = Modifier
+                .background(backgroundColor)
                 .padding(start = 20.dp)
         ) {
             Text(
@@ -51,7 +59,7 @@ fun TeacherCard(teacher: Teacher) {
                 fontFamily = monterrat,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 12.sp,
-                color = Color.Black
+                color = textColor
             )
             Row {
                 Column(modifier = Modifier.weight(2f)) {
@@ -62,7 +70,7 @@ fun TeacherCard(teacher: Teacher) {
                         fontFamily = roboto,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 9.sp,
-                        color = Color.DarkGray
+                        color = infoTextColor
                     )
                     Text(
                         modifier = Modifier.padding(top = 5.dp),
@@ -70,8 +78,7 @@ fun TeacherCard(teacher: Teacher) {
                         fontFamily = roboto,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 9.sp,
-                        color = LightBlueLC
-                        //color = Color(0xFFFFAB26)
+                        color = emailTextColor
                     )
                 }
                 Image(

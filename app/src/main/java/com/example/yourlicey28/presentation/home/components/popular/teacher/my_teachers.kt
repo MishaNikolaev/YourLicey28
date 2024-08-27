@@ -19,15 +19,19 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.yourlicey28.R
 import com.example.yourlicey28.domain.model.Teacher
 import com.example.yourlicey28.presentation.activityComponents.WelcomeRoutes
+import com.example.yourlicey28.ui.theme.DarkLC
 import com.example.yourlicey28.ui.theme.LightBlueLC
 
 @Composable
-fun MyTeachersScreen(navController: NavHostController) {
+fun MyTeachersScreen(navController: NavHostController,
+                     isDarkThemeEnabled: Boolean) {
+    val backgroundColor = if (isDarkThemeEnabled) DarkLC else Color.White
     val data = listOf(
         Teacher(
             id = R.drawable.teacher1,
@@ -420,14 +424,14 @@ fun MyTeachersScreen(navController: NavHostController) {
         )
     )
 
-    Column(
+    Column(modifier = Modifier.background(backgroundColor)
     ) {
         LazyColumn(
             modifier = Modifier.padding(top = 10.dp),
             contentPadding = PaddingValues(9.dp)
         ) {
             items(data.size) { index ->
-                TeacherCard(teacher = data[index])
+                TeacherCard(teacher = data[index], isDarkThemeEnabled = isDarkThemeEnabled)
             }
         }
     }

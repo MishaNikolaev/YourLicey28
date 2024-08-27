@@ -39,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
@@ -53,6 +54,7 @@ import com.example.yourlicey28.ui.theme.BlueLC
 import com.example.yourlicey28.ui.theme.BlueSecondLC
 import com.example.yourlicey28.ui.theme.DarkBlueLC
 import com.example.yourlicey28.ui.theme.DarkLC
+import com.example.yourlicey28.ui.theme.LightBlueLC
 import com.example.yourlicey28.ui.theme.LightGreenLC
 import com.skydoves.landscapist.glide.GlideImage
 @Composable
@@ -64,8 +66,13 @@ fun NewsCard(
 ) {
     val uriHandler = LocalUriHandler.current
 
-    val backgroundColor = if (isDarkThemeEnabled) BlueSecondLC else Color.White
-    val textColor = if (isDarkThemeEnabled) Color.White else Color.White
+    val backgroundColor = if (isDarkThemeEnabled) {
+        Color(0xFF2C3E50)
+    } else {
+        Color.White
+    }
+
+    val textColor = if (isDarkThemeEnabled) Color.White else Color.DarkGray
 
     Card(
         modifier = Modifier
@@ -74,7 +81,7 @@ fun NewsCard(
             .clickable { },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = backgroundColor
+            containerColor = Color.Transparent // Установим цвет контейнера Transparent, чтобы градиент был виден
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp
@@ -84,7 +91,7 @@ fun NewsCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(16.dp))
-                .background(backgroundColor)
+                .background(backgroundColor) // Фон для Column
         ) {
             GlideImage(
                 imageModel = news.photo,
@@ -127,7 +134,7 @@ fun NewsCard(
                     Icon(
                         imageVector = if (news.important) Icons.Default.Bookmark else Icons.Default.BookmarkBorder,
                         contentDescription = "Important",
-                        tint = if (news.important) Color.Blue else Color.Black
+                        tint = if (news.important) LightBlueLC else Color.Black
                     )
                 }
             }
