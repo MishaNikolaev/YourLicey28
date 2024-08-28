@@ -69,13 +69,12 @@ fun KruzhokScreen(navController: NavHostController, isDarkThemeEnabled: Boolean)
                                 modifier = Modifier
                                         .fillMaxSize()
                                         .background(backgroundColor)
-                                        .padding(paddingValues)
                                         .verticalScroll(rememberScrollState())
                         ) {
                                 Text(
                                         modifier = Modifier
                                                 .align(Alignment.CenterHorizontally)
-                                                .padding(top = 10.dp, start = 10.dp),
+                                                .padding(top=10.dp, start = 10.dp),
                                         text = "МБОУ Лицей №28 получил статус официальной площадки НТО.",
                                         fontFamily = monterrat,
                                         fontWeight = FontWeight.Bold,
