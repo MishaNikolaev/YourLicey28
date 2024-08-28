@@ -1,6 +1,7 @@
 package com.example.yourlicey28.presentation.home.components.services
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,11 +25,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.yourlicey28.R
+import com.example.yourlicey28.ui.theme.LightBlueLC
 import com.example.yourlicey28.ui.theme.monterrat
 
 @Composable
-fun EnterToFirstClass(navController: NavHostController) {
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+fun EnterToFirstClass(navController: NavHostController, isDarkThemeEnabled : Boolean) {
+    val backgroundColor = if (isDarkThemeEnabled) Color(0xFF2C3E50) else Color.White
+    val textColor = if (isDarkThemeEnabled) Color.White else Color.DarkGray
+    Column(modifier = Modifier.verticalScroll(rememberScrollState()).background(backgroundColor)) {
         Box(modifier = Modifier.fillMaxWidth()) {
             Image(
                 painter = painterResource(R.drawable.frame_firstclass),
@@ -51,24 +55,23 @@ fun EnterToFirstClass(navController: NavHostController) {
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 10.dp, start = 10.dp, end = 10.dp),
-            text = "Планируется набор четырёх первых классов общей наполняемостью 120 человек. Предварительная запись производится по вторникам и четвергам с 8:30 до 11:30 по телефону 271-98-41. ",
+            text = "Подать документы на прием в 1 класс одним из следующих способов:",
             fontFamily = monterrat,
             fontWeight = FontWeight.SemiBold,
-            fontSize = 12.sp,
-            color = Color.DarkGray
+            fontSize = 18.sp,
+            color = textColor
         )
         Text(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 10.dp, start = 10.dp, end = 10.dp),
-            text = "Подать документы на прием в 1 класс одним из следующих способов: \n" +
-                    "1) Лично в образовательную организацию (по предварительной записи)\n" +
-                    "2) Через портал государственных услуг РФ. \n" +
-                    "3) Заказным письмом с уведомлением о вручении Прием документов в 1 класс производится на 2 этаже в кабинете секретаря по предварительной записи",
+            text = "1) Лично в образовательную организацию (по предварительной записи)\n" +
+                    "\n2) Через портал государственных услуг РФ. \n" +
+                    "\n3) Заказным письмом с уведомлением о вручении Прием документов в 1 класс производится на 2 этаже в кабинете секретаря по предварительной записи",
             fontFamily = monterrat,
             fontWeight = FontWeight.SemiBold,
-            fontSize = 12.sp,
-            color = Color.DarkGray
+            fontSize = 16.sp,
+            color = textColor
         )
         Spacer(modifier = Modifier.height(20.dp))
         Image(
@@ -89,19 +92,11 @@ fun EnterToFirstClass(navController: NavHostController) {
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 10.dp, start = 10.dp, end = 10.dp),
-            text = "Для приема родитель(и) (законный(ые) представитель(и) ребенка или поступающий представляют следующие документы:\n" +
-                    "\n" +
-                    "-Заявление родителей (законных представителей)\n" +
-                    " -Копию документа, удостоверяющего личность родителей (законных представителей)\n" +
-                    "-Копию свидетельства о рождении ребенка\n" +
-                    "-Копию свидетельства о регистрации ребёнка по месту жительства (Форма № 8) и свидетельство о регистрации по месту         пребывания (форма № 3)\n" +
-                    "-Справку с места работы родителя (законного представителя) при наличии права внеочередного  приема на обучение -Документ, подтверждающий общее место жительства  и  проживание в одной семье (для детей, старшие братья/сестры, которых уже  обучаются в  лицее). \n" +
-                    "\n" +
-                    "Оригиналы указанных документов иметь при себе. Приказ о зачислении издается  после завершения  приема заявлений.\n",
+            text = "Оригиналы указанных документов иметь при себе. Приказ о зачислении издается  после завершения  приема заявлений.\n",
             fontFamily = monterrat,
             fontWeight = FontWeight.SemiBold,
-            fontSize = 12.sp,
-            color = Color.DarkGray
+            fontSize = 16.sp,
+            color = textColor
         )
     }
 }

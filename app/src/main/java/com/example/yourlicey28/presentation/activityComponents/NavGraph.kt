@@ -294,15 +294,15 @@ fun NavigationGraph(
         }
 
         composable(WelcomeRoutes.EnterToFirstClass.route) {
-            EnterToFirstClass(navController = navController)
+            EnterToFirstClass(navController = navController, isDarkThemeEnabled)
         }
 
         composable(WelcomeRoutes.EnterToTenClass.route) {
-            EnterToTenClass(navController = navController)
+            EnterToTenClass(navController = navController, isDarkThemeEnabled)
         }
 
         composable(WelcomeRoutes.AboutSchool.route) {
-            AboutSchool(navController = navController)
+            AboutSchool(navController = navController, isDarkThemeEnabled)
         }
         composable(WelcomeRoutes.HomeScreen.route) {
             HomeScreen(navController)

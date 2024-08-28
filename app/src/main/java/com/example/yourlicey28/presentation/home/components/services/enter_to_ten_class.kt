@@ -1,6 +1,7 @@
 package com.example.yourlicey28.presentation.home.components.services
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,8 +28,11 @@ import com.example.yourlicey28.R
 import com.example.yourlicey28.ui.theme.monterrat
 
 @Composable
-fun EnterToTenClass(navController: NavHostController){
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+fun EnterToTenClass(navController: NavHostController, isDarkThemeEnabled : Boolean){
+    val backgroundColor = if (isDarkThemeEnabled) Color(0xFF2C3E50) else Color.White
+    val textColor = if (isDarkThemeEnabled) Color.White else Color.DarkGray
+
+    Column(modifier = Modifier.verticalScroll(rememberScrollState()).background(backgroundColor)) {
         Box(modifier = Modifier.fillMaxWidth()) {
             Image(
                 painter = painterResource(R.drawable.frame_610),
@@ -58,8 +62,8 @@ fun EnterToTenClass(navController: NavHostController){
                     "Решение о зачислении учащихся на основании протокола комиссии по результатам индивидуального отбора (рейтинга) 01.07.2024 г.",
             fontFamily = monterrat,
             fontWeight = FontWeight.SemiBold,
-            fontSize = 12.sp,
-            color = Color.DarkGray
+            fontSize = 16.sp,
+            color = textColor
         )
         Spacer(modifier = Modifier.height(20.dp))
         Image(
@@ -92,8 +96,9 @@ fun EnterToTenClass(navController: NavHostController){
                     "(с углубленным изучением предметов \"история\", \"обществознание\", \"литература\")",
             fontFamily = monterrat,
             fontWeight = FontWeight.SemiBold,
-            fontSize = 12.sp,
-            color = Color.DarkGray
+            fontSize = 16.sp,
+            color = textColor
         )
+        Spacer(modifier = Modifier.height(20.dp))
     }
 }
