@@ -259,28 +259,28 @@ fun NavigationGraph(
             SettingsScreen(navController)
         }
 
-        composable(WelcomeRoutes.ScreenNews.route) {
-            Screen()
+        composable(WelcomeRoutes.KruzhokScreen.route) {
+            KruzhokScreen(navController = navController, isDarkThemeEnabled)
         }
-        /*
-        composable(route = "${WelcomeRoutes.ScreenNews.route}?id={id}",
+        composable(
+            route = WelcomeRoutes.ScreenNews.route + "?id={id}",
             arguments = listOf(
-                navArgument("id") { type = NavType.IntType }
+                navArgument("id") {
+                    type = NavType.IntType
+                    defaultValue = -1  // Можно задать значение по умолчанию при необходимости
+                }
             )
         ) { navBackStackEntry ->
+            val id = navBackStackEntry.arguments?.getInt("id") ?: -1
             val viewModel: NewsViewModelDetails = hiltViewModel()
             val themeViewModel: ThemeViewModel = hiltViewModel()
 
             Screen(
-                /*viewModel = viewModel,
+                viewModel = viewModel,
                 themeViewModel = themeViewModel,
                 state = viewModel.state.value,
                 processEvent = viewModel::processEvent
-            */)
-        }*/
-
-        composable(WelcomeRoutes.KruzhokScreen.route) {
-            KruzhokScreen(navController = navController, isDarkThemeEnabled)
+            )
         }
         composable(WelcomeRoutes.TimeTableScreen.route) {
             TimeTableScreen(navController = navController, isDarkThemeEnabled)

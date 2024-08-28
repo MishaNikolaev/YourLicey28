@@ -9,6 +9,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import androidx.compose.runtime.State
+import com.example.yourlicey28.util.Resource
+import kotlinx.coroutines.flow.collectLatest
 
 private const val TAG = "NewsViewModelDetail"
 
@@ -18,23 +20,43 @@ class NewsViewModelDetails @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val _state = mutableStateOf(NewsStateDetails())
-    val state: State<NewsStateDetails> = _state
+    val state: State<NewsStateDetails> get() = _state
 
-    init{
+    init {
         val id = savedStateHandle.get<Int>("id")
-        processEvent(event = NewsDetailsEvent.GetNews(id = id!!))
-    }
-    fun processEvent(event: NewsDetailsEvent) {
-        when (event) {
-            is NewsDetailsEvent.GetNews -> getNews(id = event.id)
+        id?.let {
+            processEvent(NewsDetailsEvent.GetNews(id = it))
         }
     }
 
+    fun processEvent(event: NewsDetailsEvent) {
+        when (event) {
+            is NewsDetailsEvent.GetNews -> getNews(event.id)
+        }
+    }
 
     private fun getNews(id: Int) {
         viewModelScope.launch {
-            val newsDetail = repository.getNews(id = id)
-            _state.value = _state.value.copy(newsDetail = newsDetail)
+            repository.getNews(id).collectLatest { result ->
+                when (result) {
+                    is Resource.Loading -> {
+                        _state.value = _state.value.copy(isLoading = result.isLoading)
+                    }
+                    is Resource.Success -> {
+                        _state.value = _state.value.copy(
+                            isLoading = false,
+                            newsDetail = result.data,
+                            error = null
+                        )
+                    }
+                    is Resource.Error -> {
+                        _state.value = _state.value.copy(
+                            isLoading = false,
+                            error = result.message
+                        )
+                    }
+                }
+            }
         }
     }
 }

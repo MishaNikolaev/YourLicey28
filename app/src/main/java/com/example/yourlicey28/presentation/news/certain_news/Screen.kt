@@ -29,16 +29,16 @@ import com.skydoves.landscapist.glide.GlideImage
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Screen(
-    /*themeViewModel: ThemeViewModel,
+    themeViewModel: ThemeViewModel,
     viewModel: NewsViewModelDetails,
     state: NewsStateDetails,
-    processEvent: (NewsDetailsEvent) -> Unit*/
+    processEvent: (NewsDetailsEvent) -> Unit
 ) {
 
-    /*
     val isDarkThemeEnabled by themeViewModel.isDarkThemeEnabled.collectAsState()
     val textColor = if (isDarkThemeEnabled) Color.White else Color.DarkGray
 
+    val newsDetail = state.newsDetail
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -46,7 +46,7 @@ fun Screen(
             .padding(16.dp)
     ) {
         GlideImage(
-            imageModel = state.newsDetail.photo,
+            imageModel = newsDetail!!.photo,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
@@ -57,11 +57,14 @@ fun Screen(
         Spacer(modifier = Modifier.height(16.dp))
 
         LinkText(
-            linkTextData = state.newsDetail.text,
+            linkTextData = newsDetail.text,
             textColor = textColor,
             isDarkThemeEnabled = isDarkThemeEnabled
         )
     }
-
-     */
+    Text(
+        text = "Данные пока не загружены или произошла ошибка",
+        color = textColor,
+        modifier = Modifier.fillMaxSize()
+    )
 }
