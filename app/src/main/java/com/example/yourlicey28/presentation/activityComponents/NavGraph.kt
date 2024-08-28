@@ -25,11 +25,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.yourlicey28.R
+import com.example.yourlicey28.domain.model.News
 import com.example.yourlicey28.presentation.news.NewsScreen
 import com.example.yourlicey28.presentation.home.HomeScreen
 import com.example.yourlicey28.presentation.home.components.popular.KruzhokScreen
@@ -61,6 +64,7 @@ import com.example.yourlicey28.presentation.home.components.services.AboutSchool
 import com.example.yourlicey28.presentation.home.components.services.EnterToFirstClass
 import com.example.yourlicey28.presentation.home.components.services.EnterToTenClass
 import com.example.yourlicey28.presentation.news.NewsViewModel
+import com.example.yourlicey28.presentation.news.certain_news.NewsViewModelDetails
 import com.example.yourlicey28.presentation.news.certain_news.Screen
 import com.example.yourlicey28.presentation.settings.SettingsScreen
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenFirst
@@ -127,7 +131,7 @@ fun MainScreen(
     navController: NavHostController,
     viewModel: WelcomeViewModel,
     themeViewModel: ThemeViewModel = hiltViewModel(),
-    isDarkThemeEnabled : Boolean
+    isDarkThemeEnabled: Boolean
 ) {
     val mainNavController = rememberNavController()
 
@@ -223,8 +227,10 @@ sealed class BottomNavItem(
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modifier,
-                    isDarkThemeEnabled: Boolean) {
+fun NavigationGraph(
+    navController: NavHostController, modifier: Modifier = Modifier,
+    isDarkThemeEnabled: Boolean
+) {
     NavHost(
         navController = navController,
         startDestination = BottomNavItem.Home.route,
@@ -243,7 +249,7 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modif
                 onImportantClicked = { news ->
                     viewModel.onImportantClicked(news = news)
                 },
-                onCardClicked = { id->
+                onCardClicked = { id ->
                     navController.navigate(WelcomeRoutes.ScreenNews.route)
                 }
             )
@@ -256,6 +262,22 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modif
         composable(WelcomeRoutes.ScreenNews.route) {
             Screen()
         }
+        /*
+        composable(route = "${WelcomeRoutes.ScreenNews.route}?id={id}",
+            arguments = listOf(
+                navArgument("id") { type = NavType.IntType }
+            )
+        ) { navBackStackEntry ->
+            val viewModel: NewsViewModelDetails = hiltViewModel()
+            val themeViewModel: ThemeViewModel = hiltViewModel()
+
+            Screen(
+                /*viewModel = viewModel,
+                themeViewModel = themeViewModel,
+                state = viewModel.state.value,
+                processEvent = viewModel::processEvent
+            */)
+        }*/
 
         composable(WelcomeRoutes.KruzhokScreen.route) {
             KruzhokScreen(navController = navController, isDarkThemeEnabled)
@@ -265,8 +287,10 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modif
         }
 
         composable(WelcomeRoutes.MyTeachersScreen.route) {
-            MyTeachersScreen(navController = navController,
-                isDarkThemeEnabled = isDarkThemeEnabled)
+            MyTeachersScreen(
+                navController = navController,
+                isDarkThemeEnabled = isDarkThemeEnabled
+            )
         }
 
         composable(WelcomeRoutes.EnterToFirstClass.route) {

@@ -44,14 +44,25 @@ fun KruzhokScreen(navController: NavHostController, isDarkThemeEnabled : Boolean
 
         val textColor = if (isDarkThemeEnabled) Color.White else Color.DarkGray
         Column(modifier = Modifier.verticalScroll(rememberScrollState()).background(backgroundColor)) {
+                Text(
+                        modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .padding(top = 10.dp, start = 10.dp),
+                        text = "МБОУ Лицей №28 получил статус официальной площадки НТО.",
+                        fontFamily = monterrat,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
+                        color = textColor
+                )
+                Spacer(modifier = Modifier.height(20.dp))
                 Image(
                         painter = painterResource(R.drawable.psoiuihqjoa),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                                 .align(Alignment.CenterHorizontally)
-                                .width(256.dp)
-                                .height(256.dp)
+                                .width(350.dp)
+                                .height(250.dp)
                                 .clip(
                                         RoundedCornerShape(
                                                 20.dp

@@ -1,7 +1,10 @@
 package com.example.yourlicey28.data.repository
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import com.example.yourlicey28.data.datastore.AppData
 import com.example.yourlicey28.data.local.AppDatabase
+import com.example.yourlicey28.data.local.dao.NewsDao
 import com.example.yourlicey28.data.local.entity.LinkTextDataEntity
 import com.example.yourlicey28.data.local.entity.NewsEntity
 import com.example.yourlicey28.data.local.entity.toEntity
@@ -21,7 +24,7 @@ import javax.inject.Singleton
 class RepositoryImpl @Inject constructor(
     val appDataStoreManager: AppData,
     val newsParser: NewParser,
-    val db: AppDatabase
+    val db: AppDatabase,
 ) : Repository {
 
     override suspend fun parseNews(): List<News> {
@@ -77,6 +80,33 @@ class RepositoryImpl @Inject constructor(
             emit(Resource.Loading(false))
         }
     }
+
+    override suspend fun getNews(id: Int): Flow<Resource<News>> {
+        return flow {
+            emit(Resource.Loading())
+            try {
+                val newsEntity = db.newsDao().getById(id)
+                if (newsEntity == null) {
+                    emit(Resource.Error("Новость с id $id не найдена"))
+                } else {
+                    val newsListTextDataEntity = db.linkTextDataDao().getAll(newsId = newsEntity.id)
+                    val news = News(
+                        id = newsEntity.id,
+                        text = newsListTextDataEntity.map { it.toObject() },
+                        photo = newsEntity.photo,
+                        favourite = newsEntity.favourite,
+                        important = newsEntity.important
+                    )
+                    emit(Resource.Success(news))
+                }
+            } catch (ex: Exception) {
+                emit(Resource.Error("Произошла ошибка: ${ex.message}"))
+            }
+
+            emit(Resource.Loading(false))
+        }
+    }
+
 
     override suspend fun setValue(key: String, value: String) {
         appDataStoreManager.setValue(key, value)
