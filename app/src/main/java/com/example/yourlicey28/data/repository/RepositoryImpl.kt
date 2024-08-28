@@ -99,4 +99,26 @@ class RepositoryImpl @Inject constructor(
         db.newsDao().update_important(important = news.important,id = news.id)
     }
 
+    override fun getImportant(): Flow<List<News>> = flow {
+        db.newsDao().getImportant().collect { newsEntities ->
+            val newsList: ArrayList<News> = arrayListOf()
+            newsEntities.forEach { entity ->
+                val newsListTextDataEntity = db.linkTextDataDao().getAll(newsId = entity.id)
+                val news = News(
+                    id = entity.id,
+                    text = newsListTextDataEntity.map { it_1 ->
+                        it_1.toObject()
+                    },
+                    photo = entity.photo,
+                    favourite = entity.favourite,
+                    important = entity.important
+                )
+                newsList.add(news)
+            }
+
+            emit(newsList)
+        }
+    }
+
+
 }

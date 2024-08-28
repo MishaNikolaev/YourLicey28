@@ -61,6 +61,7 @@ import com.example.yourlicey28.presentation.home.components.services.AboutSchool
 import com.example.yourlicey28.presentation.home.components.services.EnterToFirstClass
 import com.example.yourlicey28.presentation.home.components.services.EnterToTenClass
 import com.example.yourlicey28.presentation.news.NewsViewModel
+import com.example.yourlicey28.presentation.news.certain_news.Screen
 import com.example.yourlicey28.presentation.settings.SettingsScreen
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenFirst
 import com.example.yourlicey28.presentation.welcome.WelcomeScreenSecond
@@ -86,6 +87,7 @@ sealed class WelcomeRoutes(val route: String) {
     object EnterToTenClass : WelcomeRoutes("enter_to_ten_class")
     object AboutSchool : WelcomeRoutes("about_school")
     object ChooseTimeTable : WelcomeRoutes("choose_time_table")
+    object ScreenNews : WelcomeRoutes("screen_news")
 
     // First classes time table
     object FirstAClass : WelcomeRoutes("first_a_class")
@@ -240,6 +242,9 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modif
                 },
                 onImportantClicked = { news ->
                     viewModel.onImportantClicked(news = news)
+                },
+                onCardClicked = { id->
+                    navController.navigate(WelcomeRoutes.ScreenNews.route)
                 }
             )
         }
@@ -247,6 +252,11 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modif
 // val viewModel:HomeViewModel = hiltViewModel()
             SettingsScreen(navController)
         }
+
+        composable(WelcomeRoutes.ScreenNews.route) {
+            Screen()
+        }
+
         composable(WelcomeRoutes.KruzhokScreen.route) {
             KruzhokScreen(navController = navController, isDarkThemeEnabled)
         }

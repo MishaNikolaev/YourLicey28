@@ -63,3 +63,4 @@ fun LinkTextDataEntity.toObject():LinkTextData{
         newsId =  newsId
     )
 }
+
