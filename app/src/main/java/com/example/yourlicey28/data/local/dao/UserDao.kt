@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.yourlicey28.data.local.entity.LinkTextDataEntity
 import com.example.yourlicey28.data.local.entity.NewsEntity
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
@@ -40,7 +41,7 @@ interface NewsDao {
     suspend fun update_important(important:Boolean,id:Int)
 
     @Query("SELECT * FROM newsentity where important = 1")
-    suspend fun getImportant():List<NewsEntity>
+    fun getImportant(): Flow<List<NewsEntity>>
 }
 
 @Dao

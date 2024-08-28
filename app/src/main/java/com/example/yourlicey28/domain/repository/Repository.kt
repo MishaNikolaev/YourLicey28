@@ -21,5 +21,5 @@ interface Repository {
 
     suspend fun update(news:News)
 
-    suspend fun getImportant(): List<News>
+    fun getImportant(): Flow<List<News>>
 }

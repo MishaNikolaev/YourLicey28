@@ -20,8 +20,9 @@ class NewsImportantViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val newsList = repository.getImportant()
-            state = state.copy(newsList = newsList)
+            repository.getImportant().collect { newsList ->
+                state = state.copy(newsList = newsList)
+            }
         }
     }
 }

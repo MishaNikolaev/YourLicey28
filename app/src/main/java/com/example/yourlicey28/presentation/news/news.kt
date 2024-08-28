@@ -40,13 +40,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.yourlicey28.domain.model.News
 import com.example.yourlicey28.presentation.news.vm_components.ImportantContent
+import com.example.yourlicey28.presentation.news.vm_components.NewsImportantViewModel
 import com.example.yourlicey28.ui.theme.DarkLC
 import com.example.yourlicey28.ui.theme.LightBlueLC
 import com.example.yourlicey28.ui.theme.WhiteLC
 import com.example.yourlicey28.ui.theme.chooseTheme.ThemeViewModel
 import com.example.yourlicey28.ui.theme.monterrat
 import com.example.yourlicey28.ui.theme.roboto
-
 @ExperimentalFoundationApi
 @Composable
 fun NewsScreen(
@@ -54,6 +54,7 @@ fun NewsScreen(
     onLikeClicked: (news: News) -> Unit,
     onImportantClicked: (news: News) -> Unit,
     onCardClicked:(id:Int) -> Unit,
+    newsImportantViewModel: NewsImportantViewModel = hiltViewModel(),
     themeViewModel: ThemeViewModel = hiltViewModel() // Добавлено для отслеживания темы
 ) {
     var selectedTab by remember { mutableStateOf("Новости") }
@@ -93,7 +94,14 @@ fun NewsScreen(
                 }
             }
         } else {
-            ImportantContent()
+            ImportantContent(
+                themeViewModel = themeViewModel,
+                viewmodel = newsImportantViewModel,
+                onLikeClicked = { it -> onLikeClicked.invoke(it) },
+                onImportantClicked = { it -> onImportantClicked.invoke(it) },
+                isDarkThemeEnabled = isDarkThemeEnabled,
+                onCardClicked = onCardClicked
+            )
         }
 
         Column(
