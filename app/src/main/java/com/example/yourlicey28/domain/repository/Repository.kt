@@ -11,6 +11,8 @@ interface Repository {
 
     suspend fun getNews(): Flow<Resource<List<News>>>
 
+    suspend fun getNews(id:Int): Flow<Resource<News>>
+
     suspend fun setValue(key:String,value:String)
 
     suspend fun readValue(key:String):String?
@@ -22,4 +24,5 @@ interface Repository {
     suspend fun update(news:News)
 
     fun getImportant(): Flow<List<News>>
+
 }

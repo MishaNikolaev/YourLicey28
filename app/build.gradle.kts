@@ -109,4 +109,6 @@ dependencies {
     //Bottom sheet
     implementation(platform("androidx.compose:compose-bom:2023.06.01"))
 
+    implementation ("com.google.accompanist:accompanist-pager:0.28.0")
+
 }
