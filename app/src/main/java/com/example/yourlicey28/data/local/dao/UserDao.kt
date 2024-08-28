@@ -38,6 +38,9 @@ interface NewsDao {
 
     @Query("UPDATE newsentity SET important = :important WHERE id = :id")
     suspend fun update_important(important:Boolean,id:Int)
+
+    @Query("SELECT * FROM newsentity where important = 1")
+    suspend fun getImportant():List<NewsEntity>
 }
 
 @Dao

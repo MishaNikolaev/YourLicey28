@@ -62,6 +62,7 @@ fun NewsCard(
     news: News,
     onLikeClicked: (news: News) -> Unit,
     onImportantClicked: (news: News) -> Unit,
+    onCardClicked:(id:Int) -> Unit,
     isDarkThemeEnabled: Boolean
 ) {
     val uriHandler = LocalUriHandler.current
@@ -78,7 +79,9 @@ fun NewsCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(6.dp)
-            .clickable { },
+            .clickable {
+                onCardClicked.invoke(news.id)
+            },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent // Установим цвет контейнера Transparent, чтобы градиент был виден

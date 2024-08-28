@@ -20,4 +20,6 @@ interface Repository {
     suspend fun deleteFromDb(news:News)
 
     suspend fun update(news:News)
+
+    suspend fun getImportant(): List<News>
 }

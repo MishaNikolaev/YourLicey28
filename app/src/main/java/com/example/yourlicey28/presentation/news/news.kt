@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.yourlicey28.domain.model.News
+import com.example.yourlicey28.presentation.news.vm_components.ImportantContent
 import com.example.yourlicey28.ui.theme.DarkLC
 import com.example.yourlicey28.ui.theme.LightBlueLC
 import com.example.yourlicey28.ui.theme.WhiteLC
@@ -52,6 +53,7 @@ fun NewsScreen(
     viewModel: NewsViewModel,
     onLikeClicked: (news: News) -> Unit,
     onImportantClicked: (news: News) -> Unit,
+    onCardClicked:(id:Int) -> Unit,
     themeViewModel: ThemeViewModel = hiltViewModel() // Добавлено для отслеживания темы
 ) {
     var selectedTab by remember { mutableStateOf("Новости") }
@@ -85,7 +87,8 @@ fun NewsScreen(
                         news = viewModel.state.news[index],
                         onLikeClicked = { it -> onLikeClicked.invoke(it) },
                         onImportantClicked = { it -> onImportantClicked.invoke(it) },
-                        isDarkThemeEnabled = isDarkThemeEnabled
+                        isDarkThemeEnabled = isDarkThemeEnabled,
+                        onCardClicked = onCardClicked
                     )
                 }
             }
@@ -147,21 +150,3 @@ fun TabItem(
     }
 }
 
-@Composable
-fun ImportantContent(themeViewModel: ThemeViewModel = hiltViewModel()) {
-    val isDarkThemeEnabled by themeViewModel.isDarkThemeEnabled.collectAsState()
-
-    val textColor = if (isDarkThemeEnabled) Color.White else Color.DarkGray
-
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = "Важное содержимое",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            color = textColor
-        )
-    }
-}

@@ -99,4 +99,26 @@ class RepositoryImpl @Inject constructor(
         db.newsDao().update_important(important = news.important,id = news.id)
     }
 
+    override suspend fun getImportant(): List<News> {
+        val newsEntities = db.newsDao().getImportant()
+        val newsList: ArrayList<News> = arrayListOf()
+
+        newsEntities.forEach { it ->
+            val newsListTextDataEntity = db.linkTextDataDao().getAll(newsId = it.id)
+            val new = News(
+                id = it.id,
+                text = newsListTextDataEntity.map { it_1 ->
+                    it_1.toObject()
+                },
+                photo = it.photo,
+                favourite = it.favourite,
+                important = it.important
+            )
+            newsList.add(new)
+        }
+
+        return newsList.toList()
+    }
+
+
 }
