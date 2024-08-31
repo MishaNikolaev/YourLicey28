@@ -106,11 +106,11 @@ fun ClassCard(classInfo: ClassInfo, navController: NavController, isDarkThemeEna
             .padding(8.dp)
             .clickable {
                 when (classInfo.info) {
-                    "1 А" -> navController.navigate(WelcomeRoutes.FirstAClass.route)
-                    "1 Б" -> navController.navigate(WelcomeRoutes.FirstBClass.route)
-                    "1 В" -> navController.navigate(WelcomeRoutes.FirstVClass.route)
-                    "1 Г" -> navController.navigate(WelcomeRoutes.FirstGClass.route)
-                    "1 Д" -> navController.navigate(WelcomeRoutes.FirstGClass.route)
+                    "1 А" -> navController.navigate(WelcomeRoutes.ScheduleScreen.route + "?schedule=${classInfo.info}")
+                    "1 Б" -> navController.navigate(WelcomeRoutes.ScheduleScreen.route+ "?schedule=${classInfo.info}")
+                    "1 В" -> navController.navigate(WelcomeRoutes.ScheduleScreen.route+ "?schedule=${classInfo.info}")
+                    "1 Г" -> navController.navigate(WelcomeRoutes.ScheduleScreen.route+ "?schedule=${classInfo.info}")
+                    "1 Д" -> navController.navigate(WelcomeRoutes.ScheduleScreen.route+ "?schedule=${classInfo.info}")
 
                     /*"2 А" -> navController.navigate(WelcomeRoutes.SecondAClass.route)
                     "2 Б" -> navController.navigate(WelcomeRoutes.SecondBClass.route)

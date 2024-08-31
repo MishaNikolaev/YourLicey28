@@ -62,9 +62,9 @@ fun Screen(
             isDarkThemeEnabled = isDarkThemeEnabled
         )
     }
-    Text(
-        text = "Данные пока не загружены или произошла ошибка",
-        color = textColor,
-        modifier = Modifier.fillMaxSize()
-    )
+//    Text(
+//        text = "Данные пока не загружены или произошла ошибка",
+//        color = textColor,
+//        modifier = Modifier.fillMaxSize()
+//    )
 }
