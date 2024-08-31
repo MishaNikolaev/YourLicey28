@@ -111,4 +111,6 @@ dependencies {
 
     implementation ("com.google.accompanist:accompanist-pager:0.28.0")
 
+    
+
 }
