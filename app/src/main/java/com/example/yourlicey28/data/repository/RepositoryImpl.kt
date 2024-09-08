@@ -33,51 +33,51 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun getNews(): Flow<Resource<List<News>>> {
         return flow {
-            emit(Resource.Loading())
-            val result =
-                try {
-                    parseNews()
-                } catch (ex: Exception) {
-                    emit(Resource.Error("Проверьте подключение с интернетом"))
-                    null
-                }
-            val newsEntity: ArrayList<NewsEntity> = arrayListOf()
-            val listLinkTextDataEntity: ArrayList<LinkTextDataEntity> = arrayListOf()
-
-            result?.forEach { news ->
-
-                if (!db.newsDao().existsByPhoto(photo = news.photo)) {
-                    newsEntity.add(news.toNewsEntity())
-                    news?.text?.forEach { linkText ->
-                        listLinkTextDataEntity.add(element = linkText.toEntity())
-                    }
-                }
-            }
-
-            db.newsDao().insertAll(newsEntity)
-            db.linkTextDataDao().insertAll(listLinkTextDataEntity)
-
-            val newsEntities = db.newsDao().getAll()
-
-            val newsList: ArrayList<News> = arrayListOf()
-            newsEntities.forEach { it ->
-                val newsListTextDataEntity = db.linkTextDataDao().getAll(newsId = it.id)
-                val new = News(
-                    id = it.id,
-                    text = newsListTextDataEntity.map { it_1 ->
-                        it_1.toObject()
-                    },
-                    photo = it.photo,
-                    favourite = it.favourite,
-                    important = it.important
-                )
-                newsList.add(new)
-            }
-
-
-
-            emit(Resource.Success(data = newsList))
-            emit(Resource.Loading(false))
+//            emit(Resource.Loading())
+//            val result =
+//                try {
+//                    parseNews()
+//                } catch (ex: Exception) {
+//                    emit(Resource.Error("Проверьте подключение с интернетом"))
+//                    null
+//                }
+//            val newsEntity: ArrayList<NewsEntity> = arrayListOf()
+//            val listLinkTextDataEntity: ArrayList<LinkTextDataEntity> = arrayListOf()
+//
+//            result?.forEach { news ->
+//
+//                if (!db.newsDao().existsByPhoto(photo = news.photo)) {
+//                    newsEntity.add(news.toNewsEntity())
+//                    news?.text?.forEach { linkText ->
+//                        listLinkTextDataEntity.add(element = linkText.toEntity())
+//                    }
+//                }
+//            }
+//
+//            db.newsDao().insertAll(newsEntity)
+//            db.linkTextDataDao().insertAll(listLinkTextDataEntity)
+//
+//            val newsEntities = db.newsDao().getAll()
+//
+//            val newsList: ArrayList<News> = arrayListOf()
+//            newsEntities.forEach { it ->
+//                val newsListTextDataEntity = db.linkTextDataDao().getAll(newsId = it.id)
+//                val new = News(
+//                    id = it.id,
+//                    text = newsListTextDataEntity.map { it_1 ->
+//                        it_1.toObject()
+//                    },
+//                    photo = it.photo,
+//                    favourite = it.favourite,
+//                    important = it.important
+//                )
+//                newsList.add(new)
+//            }
+//
+//
+//
+//            emit(Resource.Success(data = newsList))
+//            emit(Resource.Loading(false))
         }
     }
 
@@ -124,10 +124,14 @@ class RepositoryImpl @Inject constructor(
         db.newsDao().delete(news = news.toNewsEntity())
     }
 
-    override suspend fun update(news: News) {
-        db.newsDao().update_favourite(favourite = news.favourite,id = news.id)
-        db.newsDao().update_important(important = news.important,id = news.id)
+    override suspend fun update_favourite(news: News) {
+        db.newsDao().update_favourite(favourite = news.favourite, id = news.id)
     }
+
+    override suspend fun update_important(news: News) {
+        db.newsDao().update_important(important = news.important, id = news.id)
+    }
+
 
     override fun getImportant(): Flow<List<News>> = flow {
         db.newsDao().getImportant().collect { newsEntities ->

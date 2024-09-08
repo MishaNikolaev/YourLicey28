@@ -21,7 +21,9 @@ interface Repository {
 
     suspend fun deleteFromDb(news:News)
 
-    suspend fun update(news:News)
+    suspend fun update_favourite(news:News)
+
+    suspend fun update_important(news:News)
 
     fun getImportant(): Flow<List<News>>
 

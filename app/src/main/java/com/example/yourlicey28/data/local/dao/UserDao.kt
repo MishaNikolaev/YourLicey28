@@ -1,11 +1,13 @@
 package com.example.yourlicey28.data.local.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import androidx.room.Upsert
 import com.example.yourlicey28.data.local.entity.LinkTextDataEntity
 import com.example.yourlicey28.data.local.entity.NewsEntity
 import kotlinx.coroutines.flow.Flow
@@ -14,10 +16,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface NewsDao {
     @Query("SELECT * FROM newsentity") // извлекает все записи из таблицы
-    suspend fun getAll(): List<NewsEntity>
+    fun pagingSource(): PagingSource<Int, NewsEntity>
 
     @Query("SELECT * FROM newsentity WHERE id=:id")
     suspend fun getById(id: Int): NewsEntity
+
+    @Upsert
+    suspend fun upsertAll(news: List<NewsEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE) // Запрос для добавления списка
     suspend fun insertAll(news: List<NewsEntity>)
@@ -42,6 +47,9 @@ interface NewsDao {
 
     @Query("SELECT * FROM newsentity where important = 1")
     fun getImportant(): Flow<List<NewsEntity>>
+
+    @Query("DELETE FROM newsentity")
+    suspend fun clearAll()
 }
 
 @Dao
