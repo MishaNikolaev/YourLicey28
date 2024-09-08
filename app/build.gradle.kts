@@ -73,11 +73,11 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1") // splash screen
 
     //Compose Navigation
-    implementation ("androidx.navigation:navigation-compose:2.6.0")
+    implementation("androidx.navigation:navigation-compose:2.6.0")
 
     //Paging 3
-    implementation ("androidx.paging:paging-runtime:3.1.1")
-    implementation ("androidx.paging:paging-compose:3.2.0-rc01")
+    implementation("androidx.paging:paging-runtime:3.1.1")
+    implementation("androidx.paging:paging-compose:3.2.0-rc01")
 
 
     // Coil
@@ -105,12 +105,12 @@ dependencies {
     implementation("androidx.room:room-runtime:2.5.2")
     kapt("androidx.room:room-compiler:2.5.2")
     implementation("androidx.room:room-ktx:2.5.2")
+    implementation ("androidx.room:room-paging:2.5.2")
 
     //Bottom sheet
     implementation(platform("androidx.compose:compose-bom:2023.06.01"))
 
-    implementation ("com.google.accompanist:accompanist-pager:0.28.0")
+    implementation("com.google.accompanist:accompanist-pager:0.28.0")
 
-    
 
 }

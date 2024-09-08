@@ -26,6 +26,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.yourlicey28.R
 import com.example.yourlicey28.presentation.news.NewsScreen
 import com.example.yourlicey28.presentation.home.HomeScreen
@@ -185,8 +186,10 @@ fun NavigationGraph(
         }
         composable(BottomNavItem.News.route) {
             val viewModel: NewsViewModel = hiltViewModel()
+            val news = viewModel.newsPagingFlow.collectAsLazyPagingItems()
             NewsScreen(
-                viewModel = viewModel,
+                state = viewModel.state,
+                news = news,
                 onLikeClicked = { news ->
                     viewModel.onLickeClicked(news = news)
                 },

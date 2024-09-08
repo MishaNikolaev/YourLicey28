@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.paging.compose.LazyPagingItems
 import com.example.yourlicey28.domain.model.News
 import com.example.yourlicey28.presentation.news.vm_components.ImportantContent
 import com.example.yourlicey28.presentation.news.vm_components.NewsImportantViewModel
@@ -50,7 +51,8 @@ import com.example.yourlicey28.ui.theme.roboto
 @ExperimentalFoundationApi
 @Composable
 fun NewsScreen(
-    viewModel: NewsViewModel,
+    state: NewsState,
+    news: LazyPagingItems<News>,
     onLikeClicked: (news: News) -> Unit,
     onImportantClicked: (news: News) -> Unit,
     onCardClicked:(id:Int) -> Unit,
@@ -83,14 +85,16 @@ fun NewsScreen(
                 modifier = Modifier.padding(top = 10.dp),
                 contentPadding = PaddingValues(9.dp)
             ) {
-                items(viewModel.state.news.size) { index ->
-                    NewsCard(
-                        news = viewModel.state.news[index],
-                        onLikeClicked = { it -> onLikeClicked.invoke(it) },
-                        onImportantClicked = { it -> onImportantClicked.invoke(it) },
-                        isDarkThemeEnabled = isDarkThemeEnabled,
-                        onCardClicked = onCardClicked
-                    )
+                items(news.itemCount) { index ->
+                    news.get(index)?.let {
+                        NewsCard(
+                            news = it,
+                            onLikeClicked = { it -> onLikeClicked.invoke(it) },
+                            onImportantClicked = { it -> onImportantClicked.invoke(it) },
+                            isDarkThemeEnabled = isDarkThemeEnabled,
+                            onCardClicked = onCardClicked
+                        )
+                    }
                 }
             }
         } else {
@@ -109,9 +113,9 @@ fun NewsScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            if (viewModel.state.error.isNotBlank()) {
+            if (state.error.isNotBlank()) {
                 Text(
-                    text = viewModel.state.error,
+                    text = state.error,
                     fontFamily = roboto,
                     fontSize = 16.sp,
                     color = textColor,
@@ -119,7 +123,7 @@ fun NewsScreen(
                     modifier = Modifier.padding(top = 70.dp)
                 )
             }
-            if (viewModel.state.isLoading) {
+            if (state.isLoading) {
                 CircularProgressIndicator(color = LightBlueLC)
             }
         }
